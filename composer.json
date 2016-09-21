@@ -1,0 +1,14 @@
+{
+  "name": "lacuna-restpki/client",
+  "description": "Client lib for Rest PKI",
+  "type": "library",
+  "keywords": [ "lacuna", "client lib", "rest pki", "signature" ],
+  "homepage": "https://github.com/LacunaSoftware/RestPkiPhpClient",
+  "authors": [
+    { "name": "ismael96", "email": "IsmaelM@lacunasoftware.com" }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0"
+  }
+}
