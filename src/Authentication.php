@@ -9,27 +9,32 @@ class Authentication
     private $restPkiClient;
 
     private $certificate;
-    private $done;
+    private $done = false;
 
     public function __construct($restPkiClient)
     {
         $this->restPkiClient = $restPkiClient;
-        $this->done = false;
     }
 
     public function startWithWebPki($securityContextId)
     {
-        $response = $this->restPkiClient->post('Api/Authentications', array(
+        $request = array(
             'securityContextId' => $securityContextId
-        ));
+        );
+
+        $response = $this->restPkiClient->post('Api/Authentications', $request);
+
         return $response->token;
     }
 
     public function completeWithWebPki($token)
     {
         $response = $this->restPkiClient->post("Api/Authentications/$token/Finalize", null);
-        $this->certificate = $response->certificate;
+        if (isset($response->certificate)) {
+            $this->certificate = $response->certificate;
+        }
         $this->done = true;
+
         return new ValidationResults($response->validationResults);
     }
 

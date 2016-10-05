@@ -36,14 +36,14 @@ class Color
                         $this->blue = $args[2];
                         $this->alpha = $args[3];
                     } else {
-                        throw new \InvalidArgumentException("Invalid parameters passed to the ColorModel's Constructor.");
+                        throw new \InvalidArgumentException("Invalid parameters passed to the Color's constructor.");
                     }
                 }
             }
         }
 
         if (!is_int($this->red) || !is_int($this->green) || !is_int($this->blue) || (isset($this->alpha) && !is_int($this->alpha))) {
-            throw new \InvalidArgumentException("Invalid parameters passed to the ColorModel's Constructor.");
+            throw new \InvalidArgumentException("Invalid parameters passed to the Color's constructor.");
         }
     }
 

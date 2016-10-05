@@ -45,7 +45,7 @@ class CadesSignatureStarter extends SignatureStarter
         if (empty($this->contentToSign) && empty($this->cmsToCoSign)) {
             throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
         }
-        if (empty($this->signaturePolicyId)) {
+        if (!isset($this->signaturePolicyId)) {
             throw new \Exception("The signature policy was not set");
         }
 
@@ -68,6 +68,7 @@ class CadesSignatureStarter extends SignatureStarter
         if (isset($response->certificate)) {
             $this->certificateInfo = $response->certicate;
         }
+        $this->done = true;
 
         return $response->token;
     }

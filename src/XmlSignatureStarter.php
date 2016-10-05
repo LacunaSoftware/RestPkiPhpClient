@@ -4,8 +4,6 @@ namespace Lacuna\RestPki\Client;
 
 abstract class XmlSignatureStarter extends SignatureStarter
 {
-
-    protected $restPkiClient;
     protected $xmlContent;
     protected $signatureElementId;
     protected $signatureElementLocationXPath;
@@ -17,12 +15,12 @@ abstract class XmlSignatureStarter extends SignatureStarter
         parent::__construct($restPkiClient);
     }
 
-    public function setXmlToSignPath($xmlPath)
+    public function setXmlFileToSign($xmlPath)
     {
         $this->xmlContent = file_get_contents($xmlPath);
     }
 
-    public function setXmlToSignContent($content)
+    public function setXmlContentToSign($content)
     {
         $this->xmlContent = $content;
     }
@@ -34,7 +32,7 @@ abstract class XmlSignatureStarter extends SignatureStarter
         $this->signatureElementLocationNsm = $namespaceManager;
     }
 
-    public function setSignatureElementId($signatureElementId)
+    public function setSignatureElement($signatureElementId)
     {
         $this->signatureElementId = $signatureElementId;
     }

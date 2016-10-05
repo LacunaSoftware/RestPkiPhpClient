@@ -6,22 +6,29 @@ class CadesSignatureExplorer extends SignatureExplorer
 {
     const CMS_SIGNATURE_MIME_TYPE = "application/pkcs7-signature";
 
+    private $dataFileContent;
+
     public function __construct($client)
     {
         parent::__construct($client);
     }
 
+    public function setDataFile($filePath)
+    {
+        $this->dataFileContent = file_get_contents($filePath);
+    }
+
     public function open()
     {
         $dataHashes = null;
-        if (!isset($this->signatureFileContent)) {
+        if (empty($this->signatureFileContent)) {
             throw new \RuntimeException("The signature file to open not set");
         }
 
-        if ($this->signatureFileContent != null) {
+        if (!empty($this->dataFileContent)) {
             $requiredHashes = $this->getRequiredHashes();
             if (count($requiredHashes) > 0) {
-                $dataHashes = $this->computeDataHashes($this->signatureFileContent, $requiredHashes);
+                $dataHashes = $this->computeDataHashes($this->dataFileContent, $requiredHashes);
             }
         }
 
@@ -32,6 +39,7 @@ class CadesSignatureExplorer extends SignatureExplorer
         foreach ($response->signers as $signer) {
             $signer->validationResults = new ValidationResults($signer->validationResults);
             $signer->messageDigest->algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($signer->messageDigest->algorithm);
+
             if (isset($signer->signingTime)) {
                 $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
             }
@@ -65,8 +73,7 @@ class CadesSignatureExplorer extends SignatureExplorer
             $digestValue = mhash($algorithm->getHashId(), $dataFileStream);
             $dataHash = array(
                 'algorithm' => $algorithm->getAlgorithm(),
-                'value' => base64_encode($digestValue),
-                'hexValue' => null
+                'value' => base64_encode($digestValue)
             );
             array_push($dataHashes, $dataHash);
         }

@@ -18,14 +18,15 @@ class PadesSignatureStarter extends SignatureStarter
         $this->bypassMarksIfSigned = true;
         $this->done = false;
         $this->pdfMarks = [];
+        $this->measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     }
 
-    public function setPdfToSignPath($pdfPath)
+    public function setPdfFileToSign($pdfPath)
     {
         $this->pdfContent = file_get_contents($pdfPath);
     }
 
-    public function setPdfToSignContent($content)
+    public function setPdfContentToSign($content)
     {
         $this->pdfContent = $content;
     }
@@ -41,11 +42,12 @@ class PadesSignatureStarter extends SignatureStarter
         if (empty($this->pdfContent)) {
             throw new \Exception("The PDF to sign was not set");
         }
-        if (empty($this->signaturePolicyId)) {
+        if (!isset($this->signaturePolicyId)) {
             throw new \Exception("The signature policy was not set");
         }
 
         $request = array(
+            'pdfToSign' => base64_encode($this->pdfContent),
             'signaturePolicyId' => $this->signaturePolicyId,
             'securityContextId' => $this->securityContextId,
             'callbackArgument' => $this->callbackArgument,
@@ -55,10 +57,7 @@ class PadesSignatureStarter extends SignatureStarter
             'pageOptimization' => $this->pageOptimization,
             'visualRepresentation' => $this->visualRepresentation
         );
-        if (!empty($this->pdfContent)) {
-            $request['pdfToSign'] = base64_encode($this->pdfContent);
-        }
-        if (!empty($this->certificate)) { // may be null
+        if (isset($this->certificate)) { // If it's set, encode in base64
             $request['certificate'] = base64_encode($this->signerCertificate);
         }
 

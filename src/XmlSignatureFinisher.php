@@ -19,12 +19,28 @@ class XmlSignatureFinisher extends SignatureFinisher
             throw new \Exception("The token was not set");
         }
 
-        $response = $this->restPkiClient->post("Api/XmlSignatures/{$this->token}/Finalize", null);
+        if (!isset($this->signature)) {
+            $response = $this->restPkiClient->post("Api/XmlSignatures/{$this->token}/Finalize", null);
+        } else {
+            $request = array(
+                'signature' => base64_encode($this->signature)
+            );
+            $response = $this->restPkiClient->post("Api/XmlSignatures/{$this->token}/Finalize", $request);
+        }
 
         $this->signedXml = base64_decode($response->signedXml);
+        $this->callbackArgument = $response->callbackArgument;
         $this->certificateInfo = $response->certificate;
         $this->done = true;
 
+        return $this->signedXml;
+    }
+
+    public function getSignedXml()
+    {
+        if (!$this->done) {
+            throw new \Exception('The getSignedXml() method can only be called affter calling the finish() method');
+        }
         return $this->signedXml;
     }
 

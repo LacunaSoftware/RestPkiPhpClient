@@ -17,7 +17,7 @@ class PdfMarkTextElement extends PdfMarkElement
                 $this->textSections = $args[1];
                 parent::__construct(PdfMarkElementType::TEXT, $args[0]);
             } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkTextElement's Constructor.");
+                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkTextElement's constructor.");
             }
         }
     }

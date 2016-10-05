@@ -14,7 +14,7 @@ class XmlElementSignatureStarter extends XmlSignatureStarter
         parent::__construct($restPkiClient);
     }
 
-    public function setToSignElementId($toSignElementId)
+    public function setToSignElement($toSignElementId)
     {
         $this->toSignElementId = $toSignElementId;
     }
@@ -37,11 +37,17 @@ class XmlElementSignatureStarter extends XmlSignatureStarter
 
         $request = parent::getRequest();
         $request['elementToSignId'] = $this->toSignElementId;
-        if ($this->idResolutionTable != null) {
+        if (isset($this->idResolutionTable)) {
             $request['idResolutionTable'] = $this->idResolutionTable->toModel();
         }
 
         $response = $this->restPkiClient->post('Api/XmlSignatures/XmlElementSignature', $request);
+
+        if (isset($response->certificate)) {
+            $this->certificateInfo = $response->certificate;
+        }
+        $this->done = true;
+
         return $response->token;
     }
 }

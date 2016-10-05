@@ -28,7 +28,7 @@ abstract class SignatureExplorer
         $this->validate = $validate;
     }
 
-    public function setDefaultSignaturePolicyId($signaturePolicyId)
+    public function setDefaultSignaturePolicy($signaturePolicyId)
     {
         $this->defaultSignaturePolicyId = $signaturePolicyId;
     }
@@ -38,7 +38,7 @@ abstract class SignatureExplorer
         $this->acceptableExplicitPolicies = $policyCatalog;
     }
 
-    public function setSecurityContextId($securityContextId)
+    public function setSecurityContext($securityContextId)
     {
         $this->securityContextId = $securityContextId;
     }
@@ -49,15 +49,13 @@ abstract class SignatureExplorer
             "validate" => $this->validate,
             "defaultSignaturePolicyId" => $this->defaultSignaturePolicyId,
             "securityContextId" => $this->securityContextId,
-            "acceptableExplicitPolicies" => $this->acceptableExplicitPolicies,
-            "dataHashes" => null
+            "acceptableExplicitPolicies" => $this->acceptableExplicitPolicies
         );
 
-        if ($this->signatureFileContent != null) {
+        if (!empty($this->signatureFileContent)) {
             $request['file'] = array(
                 "content" => base64_encode($this->signatureFileContent),
-                "mimeType" => $mimeType,
-                "blobId" => null
+                "mimeType" => $mimeType
             );
         }
 

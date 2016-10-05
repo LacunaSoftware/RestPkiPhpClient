@@ -16,11 +16,10 @@ class PdfMarkElement
             $this->rotation = 0;
         } else {
             if (sizeof($args) == 2) { // Case (elementType, relativeContainer)
-                $this->rotation = 0;
-                $this->elementType = $args[0];
+                $this::__construct($args[0]);
                 $this->relativeContainer = $args[1];
             } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkElement's Constructor.");
+                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkElement's constructor.");
             }
         }
     }

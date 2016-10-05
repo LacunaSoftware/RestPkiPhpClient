@@ -14,18 +14,17 @@ class PadesSignatureFinisher extends SignatureFinisher
 
     public function finish()
     {
-
-        $request = null;
-
         if (empty($this->token)) {
             throw new \Exception("The token was not set");
         }
 
-        if (empty($this->signature)) {
+        if (!isset($this->signature)) {
             $response = $this->restPkiClient->post("Api/PadesSignatures/{$this->token}/Finalize", null);
         } else {
-            $request['signature'] = $this->signature;
-            $response = $this->restPkiClient->post("Api/PadesSignatures/{$this->token}/Finalize", $request);
+            $request = array(
+                'signature' => base64_encode($this->signature)
+            );
+            $response = $this->restPkiClient->post("Api/PadesSignatures/{$this->token}/SignedBytes", $request);
         }
 
         $this->signedPdf = base64_decode($response->signedPdf);
@@ -39,7 +38,7 @@ class PadesSignatureFinisher extends SignatureFinisher
     public function getSignedPdf()
     {
         if (!$this->done) {
-            throw new \InvalidArgumentException("The getSignedPdf() method can only be called after calling one of the Finish methods");
+            throw new \Exception("The getSignedPdf() method can only be called after calling the finish() method");
         }
 
         return $this->signedPdf;

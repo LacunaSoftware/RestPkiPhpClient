@@ -4,6 +4,7 @@ namespace Lacuna\RestPki\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
+use Psr\Http\Message\ResponseInterface;
 
 class RestPkiClient
 {
@@ -62,7 +63,7 @@ class RestPkiClient
         return json_decode($httpResponse->getBody());
     }
 
-    private function checkResponse($verb, $url, \Psr\Http\Message\ResponseInterface $httpResponse)
+    private function checkResponse($verb, $url, ResponseInterface $httpResponse)
     {
         $statusCode = $httpResponse->getStatusCode();
         if ($statusCode < 200 || $statusCode > 299) {

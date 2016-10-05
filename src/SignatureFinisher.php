@@ -33,7 +33,7 @@ abstract class SignatureFinisher
     public function getCallbackArgument()
     {
         if (!$this->done) {
-            throw new \InvalidArgumentException("The getCallbackArgument() method can only be called after calling one of the Finish methods");
+            throw new \Exception("The getCallbackArgument() method can only be called after calling the finish() method");
         }
 
         return $this->callbackArgument;
@@ -42,7 +42,7 @@ abstract class SignatureFinisher
     public function getCertificateInfo()
     {
         if (!$this->done) {
-            throw new \InvalidArgumentException('The method getCertificateInfo() can only be called after calling the finish() method');
+            throw new \Exception('The method getCertificateInfo() can only be called after calling the finish() method');
         }
 
         return $this->certificateInfo;

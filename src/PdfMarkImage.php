@@ -15,11 +15,11 @@ class PdfMarkImage
             $this->resource = new ResourceContentOrReference();
         } else {
             if (sizeof($args) == 2) { // Case (imageContent, mimeType)
-                $this->resource = new ResourceContentOrReference();
+                $this::__construct();
                 $this->resource->content = base64_encode($args[0]);
                 $this->resource->mimeType = $args[1];
             } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkImageElement's Constructor.");
+                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkImage's constructor.");
             }
         }
     }

@@ -13,7 +13,7 @@ class PadesSignatureExplorer extends SignatureExplorer
 
     public function open()
     {
-        if (!isset($this->signatureFileContent)) {
+        if (empty($this->signatureFileContent)) {
             throw new \RuntimeException("The signature file to open not set");
         } else {
             $request = $this->getRequest($this::PDF_MIME_TYPE);
@@ -22,6 +22,7 @@ class PadesSignatureExplorer extends SignatureExplorer
             foreach ($response->signers as $signer) {
                 $signer->validationResults = new ValidationResults($signer->validationResults);
                 $signer->messageDigest->algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($signer->messageDigest->algorithm);
+
                 if (isset($signer->signingTime)) {
                     $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
                 }

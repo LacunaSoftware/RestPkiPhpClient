@@ -42,7 +42,7 @@ abstract class SignatureStarter
     public function getCertificateInfo()
     {
         if (!$this->done) {
-            throw new \InvalidArgumentException("The getCertificateInfo() method can only be called after calling one of the Start methods");
+            throw new \InvalidArgumentException("The getCertificateInfo() method can only be called after calling the start() method");
         }
 
         return $this->certificateInfo;

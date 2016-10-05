@@ -4,13 +4,6 @@ namespace Lacuna\RestPki\Client;
 
 class StandardSignaturePolicyCatalog
 {
-    protected $policies;
-
-    public function __construct($policies)
-    {
-        $this->policies = $policies;
-    }
-
     public static function getPkiBrazilCades()
     {
         return array(
