@@ -52,7 +52,7 @@ abstract class SignatureExplorer
             "acceptableExplicitPolicies" => $this->acceptableExplicitPolicies
         );
 
-        if (!empty($this->signatureFileContent)) {
+        if ($this->signatureFileContent != null) {
             $request['file'] = array(
                 "content" => base64_encode($this->signatureFileContent),
                 "mimeType" => $mimeType

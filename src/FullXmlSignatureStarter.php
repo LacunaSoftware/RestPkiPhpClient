@@ -15,7 +15,7 @@ class FullXmlSignatureStarter extends XmlSignatureStarter
 
         parent::verifyCommonParameters(true);
         if (empty($this->xmlContent)) {
-            throw new \Exception('The XML to sign was not set');
+            throw new \Exception('The XML was not set');
         }
 
         $request = parent::getRequest();
@@ -29,4 +29,24 @@ class FullXmlSignatureStarter extends XmlSignatureStarter
 
         return $response->token;
     }
+
+    public function start()
+    {
+        parent::verifyCommonParameters(false);
+        if (empty($this->xmlContent)) {
+            throw new \Exception('The XML was not set');
+        }
+
+        $request = parent::getRequest();
+
+        $response = $this->restPkiClient->post('Api/XmlSignatures/FullXmlSignature', $request);
+
+        if (isset($response->certificate)) {
+            $this->certificateInfo = $response->certificate;
+        }
+        $this->done = true;
+
+        return self::getClientSideInstructionsObject($response);
+    }
+
 }

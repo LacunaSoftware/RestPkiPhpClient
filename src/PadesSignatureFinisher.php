@@ -14,16 +14,16 @@ class PadesSignatureFinisher extends SignatureFinisher
 
     public function finish()
     {
+        $request = null;
+
         if (empty($this->token)) {
             throw new \Exception("The token was not set");
         }
 
-        if (!isset($this->signature)) {
+        if (empty($this->signatureBase64)) {
             $response = $this->restPkiClient->post("Api/PadesSignatures/{$this->token}/Finalize", null);
         } else {
-            $request = array(
-                'signature' => base64_encode($this->signature)
-            );
+            $request['signature'] = $this->signatureBase64;
             $response = $this->restPkiClient->post("Api/PadesSignatures/{$this->token}/SignedBytes", $request);
         }
 

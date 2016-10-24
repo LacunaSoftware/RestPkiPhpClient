@@ -50,7 +50,7 @@ class CadesSignatureStarter extends SignatureStarter
         }
 
         $request = array(
-            'certificate' => $this->signerCertificate, // may be null
+            'certificate' => $this->signerCertificateBase64,
             'signaturePolicyId' => $this->signaturePolicyId,
             'securityContextId' => $this->securityContextId,
             'callbackArgument' => $this->callbackArgument,
@@ -73,4 +73,39 @@ class CadesSignatureStarter extends SignatureStarter
         return $response->token;
     }
 
+    public function start()
+    {
+        if (empty($this->contentToSign) && empty($this->cmsToCoSign)) {
+            throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+        }
+        if (empty($this->signerCertificateBase64)) {
+            throw new \Exception("The signer certificate was not set");
+        }
+        if (empty($this->signaturePolicyId)) {
+            throw new \Exception("The signature policy was not set");
+        }
+
+        $request = array(
+            'certificate' => $this->signerCertificateBase64,
+            'signaturePolicyId' => $this->signaturePolicyId,
+            'securityContextId' => $this->securityContextId,
+            'callbackArgument' => $this->callbackArgument,
+            'encapsulateContent' => $this->encapsulateContent
+        );
+        if (!empty($this->contentToSign)) {
+            $request['contentToSign'] = base64_encode($this->contentToSign);
+        }
+        if (!empty($this->cmsToCoSign)) {
+            $request['cmsToCoSign'] = base64_encode($this->cmsToCoSign);
+        }
+
+        $response = $this->restPkiClient->post('Api/CadesSignatures', $request);
+
+        if (isset($response->certificate)) {
+            $this->certificateInfo = $response->certificate;
+        }
+        $this->done = true;
+
+        return self::getClientSideInstructionsObject($response);
+    }
 }

@@ -16,7 +16,7 @@ class PdfMarkImageElement extends PdfMarkElement
                 $this->image = $args[1];
                 parent::__construct(PdfMarkElementType::IMAGE, $args[0]);
             } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkImageElement's Constructor.");
+                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkImageElement's constructor.");
             }
         }
     }

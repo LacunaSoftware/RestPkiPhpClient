@@ -7,8 +7,8 @@ abstract class SignatureFinisher
 
     /** @var RestPkiClient */
     protected $restPkiClient;
-    public $token;
-    public $signature;
+    protected $token;
+    protected $signatureBase64;
     protected $done;
     protected $callbackArgument;
     protected $certificateInfo;
@@ -25,7 +25,12 @@ abstract class SignatureFinisher
 
     public function setSignature($signature)
     {
-        $this->signature = $signature;
+        $this->signatureBase64 = base64_encode($signature);
+    }
+
+    public function setSignatureBase64($signature)
+    {
+        $this->signatureBase64 = $signature;
     }
 
     public abstract function finish();

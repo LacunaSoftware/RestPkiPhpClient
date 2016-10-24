@@ -25,7 +25,7 @@ class CadesSignatureExplorer extends SignatureExplorer
             throw new \RuntimeException("The signature file to open not set");
         }
 
-        if (!empty($this->dataFileContent)) {
+        if ($this->dataFileContent != null) {
             $requiredHashes = $this->getRequiredHashes();
             if (count($requiredHashes) > 0) {
                 $dataHashes = $this->computeDataHashes($this->dataFileContent, $requiredHashes);

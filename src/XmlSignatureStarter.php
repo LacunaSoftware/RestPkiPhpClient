@@ -32,7 +32,7 @@ abstract class XmlSignatureStarter extends SignatureStarter
         $this->signatureElementLocationNsm = $namespaceManager;
     }
 
-    public function setSignatureElement($signatureElementId)
+    public function setSignatureElementId($signatureElementId)
     {
         $this->signatureElementId = $signatureElementId;
     }
@@ -52,6 +52,7 @@ abstract class XmlSignatureStarter extends SignatureStarter
     protected function getRequest()
     {
         $request = array(
+            'certificate' => $this->signerCertificateBase64,
             'signaturePolicyId' => $this->signaturePolicyId,
             'securityContextId' => $this->securityContextId,
             'signatureElementId' => $this->signatureElementId
