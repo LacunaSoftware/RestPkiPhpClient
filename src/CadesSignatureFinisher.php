@@ -21,7 +21,7 @@ class CadesSignatureFinisher extends SignatureFinisher
             throw new \Exception("The token was not set");
         }
 
-        if (empty($this->signature)) {
+        if (empty($this->signatureBase64)) {
             $response = $this->restPkiClient->post("Api/CadesSignatures/{$this->token}/Finalize", null);
         } else {
             $request['signature'] = $this->signatureBase64;
