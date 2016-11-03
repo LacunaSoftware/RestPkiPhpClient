@@ -28,7 +28,7 @@ abstract class SignatureExplorer
         $this->validate = $validate;
     }
 
-    public function setDefaultSignaturePolicy($signaturePolicyId)
+    public function setDefaultSignaturePolicyId($signaturePolicyId)
     {
         $this->defaultSignaturePolicyId = $signaturePolicyId;
     }
@@ -38,7 +38,7 @@ abstract class SignatureExplorer
         $this->acceptableExplicitPolicies = $policyCatalog;
     }
 
-    public function setSecurityContext($securityContextId)
+    public function setSecurityContextId($securityContextId)
     {
         $this->securityContextId = $securityContextId;
     }
