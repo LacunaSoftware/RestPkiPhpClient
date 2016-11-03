@@ -15,12 +15,12 @@ abstract class XmlSignatureStarter extends SignatureStarter
         parent::__construct($restPkiClient);
     }
 
-    public function setXmlFileToSign($xmlPath)
+    public function setXmlToSignPath($xmlPath)
     {
         $this->xmlContent = file_get_contents($xmlPath);
     }
 
-    public function setXmlContentToSign($content)
+    public function setXmlToSignContent($content)
     {
         $this->xmlContent = $content;
     }
