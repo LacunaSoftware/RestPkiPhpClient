@@ -1,5 +1,6 @@
 REST PKI client lib for PHP
 ===========================
+**Standard version for PHP 5.5 or greater**
  
 This library contains classes that encapsulate the calls to the REST PKI API.
 
