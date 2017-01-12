@@ -2,17 +2,26 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class SignatureStarter
+ * @package Lacuna\RestPki\Client
+ *
+ * @property $signaturePolicy string
+ * @property $securityContext string
+ * @property $callbackArgument string
+ * @property-read $certificateInfo
+ */
 abstract class SignatureStarter
 {
+    public $signaturePolicy;
+    public $securityContext;
+    public $callbackArgument;
 
     /** @var RestPkiClient */
-    protected $restPkiClient;
+    protected $client;
     protected $signerCertificateBase64;
-    protected $signaturePolicyId;
-    protected $securityContextId;
-    protected $callbackArgument;
     protected $done;
-    protected $certificateInfo;
+    protected $_certificateInfo;
 
     private static function getOpenSslSignatureAlgorithm($oid)
     {
@@ -32,42 +41,64 @@ abstract class SignatureStarter
         }
     }
 
+    /**
+     * @param $response
+     * @return SignatureAlgorithmParameters
+     */
     protected static function getClientSideInstructionsObject($response)
     {
-        return (object)array(
-            'token' => $response->token,
-            'toSignData' => base64_decode($response->toSignData),
-            'toSignHash' => base64_decode($response->toSignHash),
-            'digestAlgorithmOid' => $response->digestAlgorithmOid,
-            'openSslSignatureAlgorithm' => self::getOpenSslSignatureAlgorithm($response->digestAlgorithmOid)
-        );
+        $sigParams = new SignatureAlgorithmParameters();
+        $sigParams->token = $response->token;
+        $sigParams->toSignData = base64_decode($response->toSignData);
+        $sigParams->toSignHash = base64_decode($response->toSignHash);
+        $sigParams->digestAlgorithmOid = $response->digestAlgorithmOid;
+        $sigParams->openSslSignatureAlgorithm = self::getOpenSslSignatureAlgorithm($response->digestAlgorithmOid);
+        return $sigParams;
     }
 
-    protected function __construct($restPkiClient)
+    /**
+     * @param $client RestPkiClient
+     */
+    protected function __construct($client)
     {
-        $this->restPkiClient = $restPkiClient;
+        $this->client = $client;
     }
 
+    /**
+     * @param string $certificate The binary contents of the signer certificate
+     */
     public function setSignerCertificate($certificate)
     {
         $this->signerCertificateBase64 = base64_encode($certificate);
     }
 
+    /**
+     * @param string $certificate The base64-encoded contents of the signer certificate
+     */
     public function setSignerCertificateBase64($certificate)
     {
         $this->signerCertificateBase64 = $certificate;
     }
 
+    /**
+     * @param string $signaturePolicyId
+     */
     public function setSignaturePolicy($signaturePolicyId)
     {
-        $this->signaturePolicyId = $signaturePolicyId;
+        $this->signaturePolicy = $signaturePolicyId;
     }
 
+    /**
+     * @param string $securityContextId
+     */
     public function setSecurityContext($securityContextId)
     {
-        $this->securityContextId = $securityContextId;
+        $this->securityContext = $securityContextId;
     }
 
+    /**
+     * @param string $callbackArgument
+     */
     public function setCallbackArgument($callbackArgument)
     {
         $this->callbackArgument = $callbackArgument;
@@ -76,14 +107,24 @@ abstract class SignatureStarter
     public function getCertificateInfo()
     {
         if (!$this->done) {
-            throw new \InvalidArgumentException("The getCertificateInfo() method can only be called after calling one of the start methods");
+            throw new \LogicException("The getCertificateInfo() method can only be called after calling one of the start methods");
         }
 
-        return $this->certificateInfo;
+        return $this->_certificateInfo;
     }
 
     public abstract function startWithWebPki();
 
     public abstract function start();
 
+    public function __get($name)
+    {
+        switch ($name) {
+            case "certificateInfo":
+                return $this->getCertificateInfo();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

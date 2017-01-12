@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class StandardSecurityContexts
+ * @package Lacuna\RestPki\Client
+ */
 class StandardSecurityContexts
 {
     const PKI_BRAZIL = '201856ce-273c-4058-a872-8937bd547d36';

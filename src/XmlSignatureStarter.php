@@ -2,29 +2,75 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class XmlSignatureStarter
+ * @package Lacuna\RestPki\Client
+ *
+ * @property $signatureElementId string
+ */
 abstract class XmlSignatureStarter extends SignatureStarter
 {
-    protected $xmlContent;
-    protected $signatureElementId;
+    /** @var FileReference */
+    protected $xmlToSign;
+
+    public $signatureElementId;
     protected $signatureElementLocationXPath;
     protected $signatureElementLocationNsm;
     protected $signatureElementLocationInsertionOption;
 
-    protected function __construct($restPkiClient)
+    /**
+     * @param RestPkiClient $client
+     */
+    protected function __construct($client)
     {
-        parent::__construct($restPkiClient);
+        parent::__construct($client);
     }
 
-    public function setXmlToSignPath($xmlPath)
+    #region setXmlToSign
+
+    /**
+     * @param $path string The path of the XML file to be signed
+     */
+    public function setXmlToSignFromPath($path)
     {
-        $this->xmlContent = file_get_contents($xmlPath);
+        $this->xmlToSign = FileReference::fromFile($path);
     }
 
+    /**
+     * @param $content string The binary contents of the XML file to be signed
+     */
+    public function setXmlToSignFromBinary($content)
+    {
+        $this->xmlToSign = FileReference::fromBinary($content);
+    }
+
+    /**
+     * @deprecated Use function setXmlToSignFromPath
+     *
+     * @param $path string The path of the XML file to be signed
+     */
+    public function setXmlToSignPath($path)
+    {
+        $this->setXmlToSignFromPath($path);
+    }
+
+    /**
+     * @deprecated Use function setXmlToSignFromBinary
+     *
+     * @param $content string The binary contents of the XML file to be signed
+     */
     public function setXmlToSignContent($content)
     {
-        $this->xmlContent = $content;
+        $this->setXmlToSignFromBinary($content);
     }
 
+    #endregion
+
+    /**
+     * @param string $xpath
+     * @param string $insertionOption
+     * @param $namespaceManager
+     */
     public function setSignatureElementLocation($xpath, $insertionOption, $namespaceManager = null)
     {
         $this->signatureElementLocationXPath = $xpath;
@@ -32,6 +78,9 @@ abstract class XmlSignatureStarter extends SignatureStarter
         $this->signatureElementLocationNsm = $namespaceManager;
     }
 
+    /**
+     * @param string $signatureElementId
+     */
     public function setSignatureElementId($signatureElementId)
     {
         $this->signatureElementId = $signatureElementId;
@@ -40,12 +89,12 @@ abstract class XmlSignatureStarter extends SignatureStarter
     protected function verifyCommonParameters($isWithWebPki = false)
     {
         if (!$isWithWebPki) {
-            if (empty($this->signerCertificate)) {
-                throw new \Exception('The certificate was not set');
+            if (empty($this->signerCertificateBase64)) {
+                throw new \LogicException("The signer certificate was not set");
             }
         }
-        if (empty($this->signaturePolicyId)) {
-            throw new \Exception('The signature policy was not set');
+        if (empty($this->signaturePolicy)) {
+            throw new \LogicException('The signature policy was not set');
         }
     }
 
@@ -53,12 +102,12 @@ abstract class XmlSignatureStarter extends SignatureStarter
     {
         $request = array(
             'certificate' => $this->signerCertificateBase64,
-            'signaturePolicyId' => $this->signaturePolicyId,
-            'securityContextId' => $this->securityContextId,
+            'signaturePolicyId' => $this->signaturePolicy,
+            'securityContextId' => $this->securityContext,
             'signatureElementId' => $this->signatureElementId
         );
-        if ($this->xmlContent != null) {
-            $request['xml'] = base64_encode($this->xmlContent);
+        if (isset($this->xmlToSign)) {
+            $request['xml'] = $this->xmlToSign->getContentBase64();
         }
         if ($this->signatureElementLocationXPath != null && $this->signatureElementLocationInsertionOption != null) {
             $request['signatureElementLocation'] = array(

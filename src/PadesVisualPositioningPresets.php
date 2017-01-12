@@ -2,12 +2,21 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class PadesVisualPositioningPresets
+ * @package Lacuna\RestPki\Client
+ */
 class PadesVisualPositioningPresets
 {
-
     private static $cachedPresets = array();
 
-    public static function getFootnote(RestPkiClient $restPkiClient, $pageNumber = null, $rows = null)
+    /**
+     * @param RestPkiClient $client
+     * @param int|null $pageNumber
+     * @param int|null $rows
+     * @return mixed
+     */
+    public static function getFootnote($client, $pageNumber = null, $rows = null)
     {
         $urlSegment = 'Footnote';
         if (!empty($pageNumber)) {
@@ -16,15 +25,24 @@ class PadesVisualPositioningPresets
         if (!empty($rows)) {
             $urlSegment .= "?rows=" . $rows;
         }
-        return self::getPreset($restPkiClient, $urlSegment);
+        return self::getPreset($client, $urlSegment);
     }
 
-    public static function getNewPage(RestPkiClient $restPkiClient)
+    /**
+     * @param RestPkiClient $client
+     * @return mixed
+     */
+    public static function getNewPage($client)
     {
-        return self::getPreset($restPkiClient, 'NewPage');
+        return self::getPreset($client, 'NewPage');
     }
 
-    private static function getPreset(RestPkiClient $restPkiClient, $urlSegment)
+    /**
+     * @param RestPkiClient $restPkiClient
+     * @param string $urlSegment
+     * @return mixed
+     */
+    private static function getPreset($restPkiClient, $urlSegment)
     {
         if (array_key_exists($urlSegment, self::$cachedPresets)) {
             return self::$cachedPresets[$urlSegment];

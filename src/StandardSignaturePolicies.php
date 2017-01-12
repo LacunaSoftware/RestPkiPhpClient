@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class StandardSignaturePolicies
+ * @package Lacuna\RestPki\Client
+ */
 class StandardSignaturePolicies
 {
     const PADES_BASIC = '78d20b33-014d-440e-ad07-929f05d00cdf';

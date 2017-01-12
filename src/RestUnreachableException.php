@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class RestUnreachableException
+ * @package Lacuna\RestPki\Client
+ */
 class RestUnreachableException extends RestException
 {
     public function __construct($verb, $url, \Exception $previous)

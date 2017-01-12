@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class StandardSignaturePolicyCatalog
+ * @package Lacuna\RestPki\Client
+ */
 class StandardSignaturePolicyCatalog
 {
     public static function getPkiBrazilCades()

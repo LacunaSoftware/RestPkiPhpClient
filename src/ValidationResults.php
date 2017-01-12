@@ -2,9 +2,12 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class ValidationResults
+ * @package Lacuna\RestPki\Client
+ */
 class ValidationResults
 {
-
     private $errors;
     private $warnings;
     private $passedChecks;
@@ -16,21 +19,33 @@ class ValidationResults
         $this->passedChecks = self::convertItems($model->passedChecks);
     }
 
+    /**
+     * @return bool
+     */
     public function isValid()
     {
         return empty($this->errors);
     }
 
+    /**
+     * @return int
+     */
     public function getChecksPerformed()
     {
         return count($this->errors) + count($this->warnings) + count($this->passedChecks);
     }
 
+    /**
+     * @return bool
+     */
     public function hasErrors()
     {
         return !empty($this->errors);
     }
 
+    /**
+     * @return bool
+     */
     public function hasWarnings()
     {
         return !empty($this->warnings);
@@ -41,6 +56,10 @@ class ValidationResults
         return $this->toString(0);
     }
 
+    /**
+     * @param int $indentationLevel
+     * @return string
+     */
     public function toString($indentationLevel)
     {
         $tab = str_repeat("\t", $indentationLevel);
@@ -61,6 +80,10 @@ class ValidationResults
         return $text;
     }
 
+    /**
+     * @param int $indentationLevel
+     * @return string
+     */
     public function getSummary($indentationLevel = 0)
     {
         $tab = str_repeat("\t", $indentationLevel);

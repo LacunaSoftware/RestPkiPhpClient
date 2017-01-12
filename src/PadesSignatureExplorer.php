@@ -2,33 +2,40 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class PadesSignatureExplorer
+ * @package Lacuna\RestPki\Client
+ */
 class PadesSignatureExplorer extends SignatureExplorer
 {
     const PDF_MIME_TYPE = "application/pdf";
 
+    /**
+     * @param RestPkiClient $client
+     */
     public function __construct($client)
     {
         parent::__construct($client);
     }
 
+    /**
+     * @return mixed The signature information
+     * @throws RestUnreachableException
+     */
     public function open()
     {
-        if (empty($this->signatureFileContent)) {
-            throw new \RuntimeException("The signature file to open not set");
-        } else {
-            $request = $this->getRequest($this::PDF_MIME_TYPE);
-            $response = $this->restPkiClient->post("Api/PadesSignatures/Open", $request);
+        $request = $this->getRequest();
 
-            foreach ($response->signers as $signer) {
-                $signer->validationResults = new ValidationResults($signer->validationResults);
-                $signer->messageDigest->algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($signer->messageDigest->algorithm);
+        $response = $this->client->post("Api/PadesSignatures/Open", $request);
 
-                if (isset($signer->signingTime)) {
-                    $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
-                }
+        foreach ($response->signers as $signer) {
+            $signer->validationResults = new ValidationResults($signer->validationResults);
+            $signer->messageDigest->algorithm = RestPkiClient::_getPhpDigestAlgorithm($signer->messageDigest->algorithm);
+            if (isset($signer->signingTime)) {
+                $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
             }
-
-            return $response;
         }
+
+        return $response;
     }
 }

@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class Color
+ * @package Lacuna\RestPki\Client
+ */
 class Color
 {
     public $alpha;
@@ -46,5 +50,4 @@ class Color
             throw new \InvalidArgumentException("Invalid parameters passed to the Color's constructor.");
         }
     }
-
 }

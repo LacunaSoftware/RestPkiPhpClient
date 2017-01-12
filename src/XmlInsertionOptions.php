@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class XmlInsertionOptions
+ * @package Lacuna\RestPki\Client
+ */
 class XmlInsertionOptions
 {
     const APPEND_CHILD = 'AppendChild';
