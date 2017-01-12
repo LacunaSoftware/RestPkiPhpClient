@@ -1,7 +1,6 @@
 {
 	"name": "lacuna/restpki-client",
 	"type": "library",
-	"version": "2.0.0",
 	"description": "Client lib for Rest PKI",
 	"keywords": [ "lacuna", "client lib", "rest pki", "signature" ],
 	"homepage": "https://pki.rest/",
