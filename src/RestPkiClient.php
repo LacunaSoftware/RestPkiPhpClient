@@ -391,10 +391,8 @@ class RestPkiClient
      */
     private static function tryGetEndpointVersion($endpointUrl)
     {
-        $version = self::$endpointVersions[$endpointUrl];
-
-        if (isset($version)) {
-            return $version;
+        if (isset(self::$endpointVersions[$endpointUrl])) {
+            return self::$endpointVersions[$endpointUrl];
         }
 
         try {
