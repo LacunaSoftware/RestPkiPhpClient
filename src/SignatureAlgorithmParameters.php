@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class SignatureAlgorithmParameters
+ * @package Lacuna\RestPki
+ */
 class SignatureAlgorithmParameters
 {
 

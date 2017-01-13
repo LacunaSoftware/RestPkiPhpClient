@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class CadesSignatureStarter
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property bool|null $encapsulateContent
  * @property DigestAlgorithm[] $digestAlgorithmsForDetachedSignature

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class RestPkiClient
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property $multipartUploadThreshold int
  * @property $restPkiVersion string

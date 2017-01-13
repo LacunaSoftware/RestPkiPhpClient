@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class PdfMarkTextElement
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property array $textSections
  */

@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class SignatureResult
+ * @package Lacuna\RestPki
+ */
 class SignatureResult extends FileResult
 {
     public $certificate;

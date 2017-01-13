@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class RestPkiException
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property-read $errorCode string
  * @property-read $detail string

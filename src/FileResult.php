@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class FileResult
+ * @package Lacuna\RestPki
+ */
 class FileResult
 {
 

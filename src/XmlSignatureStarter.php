@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class XmlSignatureStarter
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property $signatureElementId string
  */

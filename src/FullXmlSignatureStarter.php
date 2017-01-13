@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class FullXmlSignatureStarter
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  */
 class FullXmlSignatureStarter extends XmlSignatureStarter
 {

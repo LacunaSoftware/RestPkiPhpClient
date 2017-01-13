@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class PdfTextSection
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property string $style
  * @property string $text

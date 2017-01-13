@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class PdfMarkImage
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property ResourceContentOrReference $resource
  * @property float|null $opacity

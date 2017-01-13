@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class CadesSignatureWithEncapsulatedContent
+ * @package Lacuna\RestPki
+ */
 class CadesSignatureWithEncapsulatedContent {
 
     public $signature;

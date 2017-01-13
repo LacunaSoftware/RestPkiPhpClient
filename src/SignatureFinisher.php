@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class SignatureFinisher
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property string $token
  * @property string $callbackArgument

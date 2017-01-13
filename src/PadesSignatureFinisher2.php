@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PadesSignatureFinisher2
+ * @package Lacuna\RestPki
+ */
 class PadesSignatureFinisher2 extends SignatureFinisher2
 {
     /**

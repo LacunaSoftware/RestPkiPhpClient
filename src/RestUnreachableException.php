@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class RestUnreachableException
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  */
 class RestUnreachableException extends RestException
 {

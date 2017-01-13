@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class PadesSignatureStarter
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property $measurementUnits string
  * @property $pageOptimization string

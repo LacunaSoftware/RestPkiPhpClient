@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
 /**
  * Class ResourceContentOrReference
- * @package Lacuna\RestPkiClient
+ * @package Lacuna\RestPki
  *
  * @property string $url
  * @property string $mimeType

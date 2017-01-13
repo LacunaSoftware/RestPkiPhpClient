@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPkiClient;
+namespace Lacuna\RestPki;
 
+/**
+ * Class CadesSignatureExplorer
+ * @package Lacuna\RestPki
+ */
 class CadesSignatureExplorer extends SignatureExplorer
 {
     const CMS_SIGNATURE_MIME_TYPE = "application/pkcs7-signature";
