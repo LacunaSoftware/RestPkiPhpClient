@@ -5,16 +5,15 @@ namespace Lacuna\RestPki;
 /**
  * Class SignatureFinisher2
  * @package Lacuna\RestPki
+ *
+ * @property string $token
+ * @property string $signatureBase64
+ * @property bool $forceBlobResult
  */
 abstract class SignatureFinisher2
 {
-    /** @var string */
     public $token;
-
-    /** @var string */
     public $signatureBase64;
-
-    /** @var bool */
     public $forceBlobResult;
 
     /** @var RestPkiClient */

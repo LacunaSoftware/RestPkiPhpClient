@@ -5,6 +5,9 @@ namespace Lacuna\RestPki;
 /**
  * Class SignatureResult
  * @package Lacuna\RestPki
+ *
+ * @property mixed $certificate
+ * @property string $callbackArgument
  */
 class SignatureResult extends FileResult
 {
@@ -15,9 +18,9 @@ class SignatureResult extends FileResult
      * @internal
      *
      * @param RestPkiClient $restPkiClient
-     * @param $model
-     * @param $certificate
-     * @param $callbackArgument
+     * @param mixed $model
+     * @param mixed $certificate
+     * @param string $callbackArgument
      */
     public function __construct($restPkiClient, $model, $certificate, $callbackArgument)
     {

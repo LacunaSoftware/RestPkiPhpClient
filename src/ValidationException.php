@@ -6,7 +6,7 @@ namespace Lacuna\RestPki;
  * Class ValidationException
  * @package Lacuna\RestPki
  *
- * @property-read $validationResults ValidationResults
+ * @property-read ValidationResults $validationResults
  */
 class ValidationException extends RestException
 {

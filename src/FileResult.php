@@ -17,7 +17,7 @@ class FileResult
      * @internal
      *
      * @param $restPkiClient RestPkiClient
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($restPkiClient, $model)
     {

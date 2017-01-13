@@ -11,10 +11,7 @@ namespace Lacuna\RestPki;
  */
 class XmlElementSignatureStarter extends XmlSignatureStarter
 {
-
     public $toSignElementId;
-
-    /** @var XmlIdResolutionTable */
     public $idResolutionTable;
 
     /**

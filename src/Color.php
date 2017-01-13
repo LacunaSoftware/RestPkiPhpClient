@@ -5,6 +5,11 @@ namespace Lacuna\RestPki;
 /**
  * Class Color
  * @package Lacuna\RestPki
+ *
+ * @property int $alpha
+ * @property int $blue
+ * @property int $green
+ * @property int $red
  */
 class Color
 {

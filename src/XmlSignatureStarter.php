@@ -10,10 +10,10 @@ namespace Lacuna\RestPki;
  */
 abstract class XmlSignatureStarter extends SignatureStarter
 {
+    public $signatureElementId;
+
     /** @var FileReference */
     protected $xmlToSign;
-
-    public $signatureElementId;
     protected $signatureElementLocationXPath;
     protected $signatureElementLocationNsm;
     protected $signatureElementLocationInsertionOption;
