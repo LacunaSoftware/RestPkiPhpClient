@@ -16,7 +16,7 @@
 	},
 	"autoload": {
         "psr-4": {
-            "Lacuna\\RestPki\\Client\\": "src/"
+            "Lacuna\\RestPki\\": "src/"
         }
     }
 }
