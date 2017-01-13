@@ -38,13 +38,15 @@ class CadesSignatureFinisher extends SignatureFinisher
 
         $this->cms = base64_decode($response->cms);
         $this->callbackArgument = $response->callbackArgument;
-        $this->_certificateInfo = $response->certificate;
+        $this->certificateInfo = $response->certificate;
         $this->done = true;
 
         return $this->cms;
     }
 
     /**
+     * Returns the binary encoded CMS (PKCS#7) file (must only be called after calling finish())
+     *
      * @return string The binary encoded CMS (PKCS#7) file
      */
     public function getCms()
@@ -56,6 +58,8 @@ class CadesSignatureFinisher extends SignatureFinisher
     }
 
     /**
+     * Writes the CMS (PKCS#7) file contents to a local file (must only be called after calling finish())
+     *
      * @param string $path The path of the file on which to write the CMS (PKCS#7) file contents
      */
     public function writeCmsToPath($path)

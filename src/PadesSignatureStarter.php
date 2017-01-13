@@ -47,11 +47,23 @@ class PadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @param $content string The binary contents of the PDF file to be signed
+     * Sets the raw (binary) contents of the PDF file to be signed
+     *
+     * @param $contentRaw string The raw (binary) contents of the PDF file to be signed
      */
-    public function setPdfToSignFromBinary($content)
+    public function setPdfToSignFromContentRaw($contentRaw)
     {
-        $this->pdfToSign = FileReference::fromBinary($content);
+        $this->pdfToSign = FileReference::fromContentRaw($contentRaw);
+    }
+
+    /**
+     * Sets the base64-encoded contents of the PDF file to be signed
+     *
+     * @param $contentBase64 string The base64-encoded contents of the PDF file to be signed
+     */
+    public function setPdfToSignFromContentBase64($contentBase64)
+    {
+        $this->pdfToSign = FileReference::fromContentBase64($contentBase64);
     }
 
     /**
@@ -63,7 +75,7 @@ class PadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setPdfToSignFromPath
+     * Alias of function setPdfToSignFromPath
      *
      * @param $path string The path of the PDF file to be signed
      */
@@ -73,17 +85,22 @@ class PadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated
+     * Alias of function setPdfToSignFromContentRaw
      *
-     * @param $content string The binary contents of the PDF file to be signed
+     * @param $contentRaw string The raw (binary) contents of the PDF file to be signed
      */
-    public function setPdfToSignContent($content)
+    public function setPdfToSignContent($contentRaw)
     {
-        $this->setPdfToSignFromBinary($content);
+        $this->setPdfToSignFromContentRaw($contentRaw);
     }
 
     #endregion
 
+    /**
+     * Alias of setting the property `visualRepresentation`
+     *
+     * @param $visualRepresentation
+     */
     public function setVisualRepresentation($visualRepresentation)
     {
         $this->visualRepresentation = $visualRepresentation;

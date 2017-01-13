@@ -37,13 +37,15 @@ class PadesSignatureFinisher extends SignatureFinisher
 
         $this->signedPdf = base64_decode($response->signedPdf);
         $this->callbackArgument = $response->callbackArgument;
-        $this->_certificateInfo = $response->certificate;
+        $this->certificateInfo = $response->certificate;
         $this->done = true;
 
         return $this->signedPdf;
     }
 
     /**
+     * Returns the binary contents of the signed PDF file (must only be called after calling finish())
+     *
      * @return string The binary contents of the signed PDF
      */
     public function getSignedPdf()
@@ -56,6 +58,8 @@ class PadesSignatureFinisher extends SignatureFinisher
     }
 
     /**
+     * Writes the signed PDF file to a local file (must only be called after calling finish())
+     *
      * @param string $pdfPath The path of the file on which to write the signed PDF
      */
     public function writeSignedPdfToPath($pdfPath)

@@ -33,6 +33,8 @@ class CadesSignatureStarter extends SignatureStarter
     #region setFileToSign
 
     /**
+     * Sets the local path of the file to be signed
+     *
      * @param $path string The path of the file to be signed
      */
     public function setFileToSignFromPath($path)
@@ -41,14 +43,28 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @param $content string The binary contents of the file to be signed
+     * Sets the raw (binary) contents of the file to be signed
+     *
+     * @param $contentRaw string The binary contents of the file to be signed
      */
-    public function setFileToSignFromBinary($content)
+    public function setFileToSignFromContentRaw($contentRaw)
     {
-        $this->fileToSign = FileReference::fromBinary($content);
+        $this->fileToSign = FileReference::fromContentRaw($contentRaw);
     }
 
     /**
+     * Sets the base64-encoded contents of the file to be signed
+     *
+     * @param $contentBase64 string The base64-encoded contents of the file to be signed
+     */
+    public function setFileToSignFromContentBase64($contentBase64)
+    {
+        $this->fileToSign = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Sets the file to be signed from a previous operation on Rest PKI
+     *
      * @param $fileResult FileResult The result of a previous operation on Rest PKI
      */
     public function setFileToSignFromResult($fileResult)
@@ -57,7 +73,7 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setFileToSignFromPath
+     * Alias of function setFileToSignFromPath
      *
      * @param $path string The path of the file to be signed
      */
@@ -67,13 +83,13 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setFileToSignFromBinary
+     * Alias of function setFileToSignFromContentRaw
      *
-     * @param $content string The binary contents of the file to be signed
+     * @param $contentRaw string The raw (binary) contents of the file to be signed
      */
-    public function setContentToSign($content)
+    public function setContentToSign($contentRaw)
     {
-        $this->setFileToSignFromBinary($content);
+        $this->setFileToSignFromContentRaw($contentRaw);
     }
 
     #endregion
@@ -81,7 +97,9 @@ class CadesSignatureStarter extends SignatureStarter
     #region setCmsToCoSign
 
     /**
-     * @param $path string The path of the CMS (PKCS #7) file to be co-signed
+     * Sets the local path of the CMS (PKCS#7) file to be co-signed
+     *
+     * @param $path string The path of the CMS (PKCS#7) file to be co-signed
      */
     public function setCmsToCoSignFromPath($path)
     {
@@ -89,14 +107,28 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @param $content string The binary contents of the CMS (PKCS #7) file to be co-signed
+     * Sets the raw (binary) contents of the CMS (PKCS#7) file to be co-signed
+     *
+     * @param $contentRaw string The raw (binary) contents of the CMS (PKCS#7) file to be co-signed
      */
-    public function setCmsToCoSignFromBinary($content)
+    public function setCmsToCoSignFromContentRaw($contentRaw)
     {
-        $this->cmsToCoSign = FileReference::fromBinary($content);
+        $this->cmsToCoSign = FileReference::fromContentRaw($contentRaw);
     }
 
     /**
+     * Sets the base64-encoded contents of the CMS (PKCS#7) file to be co-signed
+     *
+     * @param $contentBase64 string The base64-encoded contents of the CMS (PKCS#7) file to be co-signed
+     */
+    public function setCmsToCoSignFromContentBase64($contentBase64)
+    {
+        $this->cmsToCoSign = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Sets the CMS (PKCS#7) file to be co-signed from a CAdES signature previously done on Rest PKI
+     *
      * @param $fileResult FileResult The result of a previous CAdES signature on Rest PKI
      */
     public function setCmsToCoSignFromResult($fileResult)
@@ -105,9 +137,9 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setCmsToCoSignFromPath
+     * Alias of function setCmsToCoSignFromPath
      *
-     * @param $path string The path of the CMS (PKCS #7) file to be co-signed
+     * @param $path string The path of the CMS (PKCS#7) file to be co-signed
      */
     public function setCmsFileToSign($path)
     {
@@ -115,18 +147,20 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setCmsToCoSignFromBinary
+     * Alias of function setCmsToCoSignFromContentRaw
      *
-     * @param $content string The binary contents of the CMS (PKCS #7) file to be co-signed
+     * @param $contentRaw string The raw (binary) contents of the CMS (PKCS#7) file to be co-signed
      */
-    public function setCmsToSign($content)
+    public function setCmsToSign($contentRaw)
     {
-        $this->setCmsToCoSignFromBinary($content);
+        $this->setCmsToCoSignFromContentRaw($contentRaw);
     }
 
     #endregion
 
     /**
+     * Alias of setting the property encapsulateContent
+     *
      * @param $encapsulateContent
      */
     public function setEncapsulateContent($encapsulateContent)

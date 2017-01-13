@@ -35,9 +35,12 @@ class FileResult
     }
 
     /**
+     * Returns the raw (binary) content of the file. For large files, prefer the function writeToFile() to avoid
+     * memory allocation issues.
+     *
      * @return string
      */
-    public function getContent() {
+    public function getContentRaw() {
         if (isset($this->model->content)) {
             return $this->model->content;
         } else {
@@ -46,6 +49,18 @@ class FileResult
     }
 
     /**
+     * Returns the base64-encoded content of the file. For large files, prefer the function writeToFile() to avoid
+     * memory allocation issues.
+     *
+     * @return string
+     */
+    public function getContentBase64() {
+        return base64_encode($this->getContentRaw());
+    }
+
+    /**
+     * Writes the file to a local path. For large files, prefer this function to avoid memory allocation issues.
+     *
      * @param string $path
      */
     public function writeToFile($path) {

@@ -102,7 +102,7 @@ class RestPkiClient
      * @throws RestUnreachableException
      * @throws ValidationException
      */
-    public function postBinary($url, $data)
+    public function postRaw($url, $data)
     {
         $verb = 'POST';
         $client = $this->getRestClient();
@@ -165,7 +165,7 @@ class RestPkiClient
 
         switch ($apiVersion) {
             case 0:
-                return FileModel::fromContentBinary(file_get_contents($path));
+                return FileModel::fromContentRaw(file_get_contents($path));
             default:
                 return FileModel::fromBlobToken(self::_uploadFile($path));
         }
@@ -184,7 +184,7 @@ class RestPkiClient
 
         switch ($apiVersion) {
             case 0:
-                return FileModel::fromContentBinary($content);
+                return FileModel::fromContentRaw($content);
             default:
                 return FileModel::fromBlobToken(self::_uploadContent($content));
         }
@@ -208,7 +208,7 @@ class RestPkiClient
 
             $buffer = fread($handle, $partSize);
 
-            $partETag = $this->postBinary("MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
+            $partETag = $this->postRaw("MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
             array_push($partETags, $partETag);
 
             ob_flush();
@@ -247,7 +247,7 @@ class RestPkiClient
             $partLen = (int)min($len - $offset, $partSize);
             $buffer = substr($content, $offset, $partLen);
 
-            $partETag = $this->postBinary("MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
+            $partETag = $this->postRaw("MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
             array_push($partETags, $partETag);
 
             $partNumber += 1;

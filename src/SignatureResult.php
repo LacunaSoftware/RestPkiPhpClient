@@ -6,8 +6,8 @@ namespace Lacuna\RestPki;
  * Class SignatureResult
  * @package Lacuna\RestPki
  *
- * @property mixed $certificate
- * @property string $callbackArgument
+ * @property mixed $certificate Information about the signer's certificate
+ * @property string $callbackArgument Callback argument passed when the signature process was started
  */
 class SignatureResult extends FileResult
 {

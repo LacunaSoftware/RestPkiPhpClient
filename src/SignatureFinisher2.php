@@ -29,11 +29,11 @@ abstract class SignatureFinisher2
     }
 
     /**
-     * Sets the signature algorithm output in binary form
+     * Sets the signature algorithm output in raw (binary) form
      *
      * @param $signature string
      */
-    public function setSignatureBinary($signature)
+    public function setSignatureRaw($signature)
     {
         $this->signatureBase64 = base64_encode($signature);
     }

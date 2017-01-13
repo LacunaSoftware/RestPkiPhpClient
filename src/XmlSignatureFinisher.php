@@ -35,24 +35,28 @@ class XmlSignatureFinisher extends SignatureFinisher
 
         $this->signedXml = base64_decode($response->signedXml);
         $this->callbackArgument = $response->callbackArgument;
-        $this->_certificateInfo = $response->certificate;
+        $this->certificateInfo = $response->certificate;
         $this->done = true;
 
         return $this->signedXml;
     }
 
     /**
+     * Returns the encoded signed XML (can only be called after calling finish())
+     *
      * @return string The encoded signed XML
      */
     public function getSignedXml()
     {
         if (!$this->done) {
-            throw new \LogicException('The getSignedXml() method can only be called affter calling the finish() method');
+            throw new \LogicException('The getSignedXml() method can only be called after calling the finish() method');
         }
         return $this->signedXml;
     }
 
     /**
+     * Writes the signed XML to a local file (can only be called after calling finish())
+     *
      * @param $xmlPath Path of the file on which to write the signed XML
      */
     public function writeSignedXmlToPath($xmlPath)

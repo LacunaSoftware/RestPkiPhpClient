@@ -24,6 +24,8 @@ class CadesSignatureExplorer extends SignatureExplorer
     #region setDataFile
 
     /**
+     * Sets the detached data file's local path
+     *
      * @param $path string The path of the detached data file
      */
     public function setDataFileFromPath($path)
@@ -32,15 +34,27 @@ class CadesSignatureExplorer extends SignatureExplorer
     }
 
     /**
-     * @param $content string The binary contents of the detached data file
+     * Sets the detached data file's raw (binary) contents
+     *
+     * @param $contentRaw string The raw (binary) contents of the detached data file
      */
-    public function setDataFileFromBinary($content)
+    public function setDataFileFromContentRaw($contentRaw)
     {
-        $this->dataFile = FileReference::fromBinary($content);
+        $this->dataFile = FileReference::fromContentRaw($contentRaw);
     }
 
     /**
-     * @deprecated Use function setDataFileFromPath
+     * Sets the detached data file's base64-encoded contents
+     *
+     * @param $contentBase64 string The base64-encoded contents of the detached data file
+     */
+    public function setDataFileFromContentBase64($contentBase64)
+    {
+        $this->dataFile = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Alias of the function setDataFileFromPath
      *
      * @param $path string The path of the detached data file
      */

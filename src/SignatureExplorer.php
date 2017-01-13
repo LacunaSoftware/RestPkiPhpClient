@@ -44,14 +44,28 @@ abstract class SignatureExplorer
     }
 
     /**
-     * @param $content string The binary contents of the signature file to be opened
+     * Sets the raw (binary) contents of the signature file to be opened
+     *
+     * @param $contentRaw string The raw (binary) contents of the signature file to be opened
      */
-    public function setSignatureFileFromBinary($content)
+    public function setSignatureFileFromContentRaw($contentRaw)
     {
-        $this->signatureFile = FileReference::fromBinary($content);
+        $this->signatureFile = FileReference::fromContentRaw($contentRaw);
     }
 
     /**
+     * Sets the base64-encoded contents of the signature file to be opened
+     *
+     * @param $contentBase64 string The base64-encoded contents of the signature file to be opened
+     */
+    public function setSignatureFileFromContentBase64($contentBase64)
+    {
+        $this->signatureFile = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Sets the signature file to be opened from the result of a previous operation on Rest PKI
+     *
      * @param $fileResult FileResult The result of a previous operation on Rest PKI
      */
     public function setSignatureFileFromResult($fileResult)
@@ -60,7 +74,7 @@ abstract class SignatureExplorer
     }
 
     /**
-     * @deprecated Use function setSignatureFileFromPath
+     * Alias of function setSignatureFileFromPath
      *
      * @param $path string The path of the signature file to be opened
      */
@@ -72,6 +86,8 @@ abstract class SignatureExplorer
     #endregion
 
     /**
+     * Alias of setting property `validate`
+     *
      * @param bool $validate
      */
     public function setValidate($validate)
@@ -80,6 +96,8 @@ abstract class SignatureExplorer
     }
 
     /**
+     * Alias of setting property `defaultSignaturePolicy`
+     *
      * @param string $signaturePolicyId
      */
     public function setDefaultSignaturePolicyId($signaturePolicyId)
@@ -88,6 +106,8 @@ abstract class SignatureExplorer
     }
 
     /**
+     * Alias of setting property `acceptableExplicitPolicies`
+     *
      * @param string[] $policyCatalog
      */
     public function setAcceptableExplicitPolicies($policyCatalog)
@@ -96,6 +116,8 @@ abstract class SignatureExplorer
     }
 
     /**
+     * Alias of setting property `securityContext`
+     *
      * @param string $securityContext
      */
     public function setSecurityContextId($securityContext)

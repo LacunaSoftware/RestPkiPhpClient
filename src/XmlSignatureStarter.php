@@ -37,15 +37,23 @@ abstract class XmlSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @param $content string The binary contents of the XML file to be signed
+     * @param $contentRaw string The raw (binary) contents of the XML file to be signed
      */
-    public function setXmlToSignFromBinary($content)
+    public function setXmlToSignFromContentRaw($contentRaw)
     {
-        $this->xmlToSign = FileReference::fromBinary($content);
+        $this->xmlToSign = FileReference::fromContentRaw($contentRaw);
     }
 
     /**
-     * @deprecated Use function setXmlToSignFromPath
+     * @param $contentBase64 string The base64-encoded contents of the XML file to be signed
+     */
+    public function setXmlToSignFromContentBase64($contentBase64)
+    {
+        $this->xmlToSign = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Alias of function setXmlToSignFromPath
      *
      * @param $path string The path of the XML file to be signed
      */
@@ -55,13 +63,13 @@ abstract class XmlSignatureStarter extends SignatureStarter
     }
 
     /**
-     * @deprecated Use function setXmlToSignFromBinary
+     * Alias of function setXmlToSignFromContentRaw
      *
-     * @param $content string The binary contents of the XML file to be signed
+     * @param $content string The raw (binary) contents of the XML file to be signed
      */
     public function setXmlToSignContent($content)
     {
-        $this->setXmlToSignFromBinary($content);
+        $this->setXmlToSignFromContentRaw($content);
     }
 
     #endregion
@@ -79,6 +87,8 @@ abstract class XmlSignatureStarter extends SignatureStarter
     }
 
     /**
+     * Alias of setting the property `signatureElementId`
+     *
      * @param string $signatureElementId
      */
     public function setSignatureElementId($signatureElementId)

@@ -19,7 +19,7 @@ class FileModel
     /** @var string */
     public $mimeType;
 
-    public static function fromContentBinary($content) {
+    public static function fromContentRaw($content) {
         $model = new self();
         $model->content = base64_encode($content);
         return $model;

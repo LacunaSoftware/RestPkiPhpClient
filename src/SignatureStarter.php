@@ -65,14 +65,28 @@ abstract class SignatureStarter
     }
 
     /**
+     * Sets the raw (binary) contents of the signer certificate
+     *
      * @param string $certificate The binary contents of the signer certificate
      */
-    public function setSignerCertificate($certificate)
+    public function setSignerCertificateRaw($certificate)
     {
         $this->signerCertificateBase64 = base64_encode($certificate);
     }
 
     /**
+     * @deprecated Use function setSignerCertificateRaw
+     *
+     * @param string $certificate The raw (binary) contents of the signer certificate
+     */
+    public function setSignerCertificate($certificate)
+    {
+        $this->setSignerCertificateRaw($certificate);
+    }
+
+    /**
+     * Sets the base64-encoded contents of the signer certificate
+     *
      * @param string $certificate The base64-encoded contents of the signer certificate
      */
     public function setSignerCertificateBase64($certificate)
@@ -81,6 +95,8 @@ abstract class SignatureStarter
     }
 
     /**
+     * Alias of setting the property `signaturePolicyId`
+     *
      * @param string $signaturePolicyId
      */
     public function setSignaturePolicy($signaturePolicyId)
@@ -89,6 +105,8 @@ abstract class SignatureStarter
     }
 
     /**
+     * Alias of setting the property `securityContext`
+     *
      * @param string $securityContextId
      */
     public function setSecurityContext($securityContextId)
@@ -97,6 +115,8 @@ abstract class SignatureStarter
     }
 
     /**
+     * Alias of setting the proprety `callbackArgument`
+     *
      * @param string $callbackArgument
      */
     public function setCallbackArgument($callbackArgument)
@@ -104,6 +124,11 @@ abstract class SignatureStarter
         $this->callbackArgument = $callbackArgument;
     }
 
+    /**
+     * Returns information about the signer's certificate if it was given in the input parameters (can only be called after calling one of the start methods)
+     *
+     * @return mixed
+     */
     public function getCertificateInfo()
     {
         if (!$this->done) {

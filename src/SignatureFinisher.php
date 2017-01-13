@@ -7,24 +7,23 @@ namespace Lacuna\RestPki;
  * @package Lacuna\RestPki
  *
  * @property string $token
- * @property string $callbackArgument
- * @property-read $certificateInfo
+ * @property string $signatureBase64
  */
 abstract class SignatureFinisher
 {
     public $token;
-    public $callbackArgument;
+    public $signatureBase64;
 
     /** @var RestPkiClient */
     protected $client;
 
-    /** @var string */
-    protected $signatureBase64;
-
     /** @var bool */
     protected $done;
 
-    protected $_certificateInfo;
+    /** @var string */
+    protected $callbackArgument;
+
+    protected $certificateInfo;
 
     /**
      * @param RestPkiClient $client
@@ -35,6 +34,8 @@ abstract class SignatureFinisher
     }
 
     /**
+     * Alias of setting the property `token`
+     *
      * @param string $token
      */
     public function setToken($token)
@@ -43,14 +44,28 @@ abstract class SignatureFinisher
     }
 
     /**
-     * @param string $signature The binary encoded result of the signature algorithm
+     * @deprecated Use function setSignatureRaw
+     *
+     * @param string $signature The raw (binary) result of the signature algorithm
      */
     public function setSignature($signature)
+    {
+        $this->setSignatureRaw($signature);
+    }
+
+    /**
+     * Sets the raw (binary) result of the signature algorithm
+     *
+     * @param string $signature The raw (binary) result of the signature algorithm
+     */
+    public function setSignatureRaw($signature)
     {
         $this->signatureBase64 = base64_encode($signature);
     }
 
     /**
+     * Alias of setting the property `signatureBase64`
+     *
      * @param $signature The base64-encoded result of the signature algorithm
      */
     public function setSignatureBase64($signature)
@@ -63,7 +78,10 @@ abstract class SignatureFinisher
      */
     public abstract function finish();
 
+
     /**
+     * Returns the callback argument passed when the signature process was started (can only be called after calling finish())
+     *
      * @return string
      */
     public function getCallbackArgument()
@@ -75,13 +93,18 @@ abstract class SignatureFinisher
         return $this->callbackArgument;
     }
 
+    /**
+     * Returns information about the signer's certificate (can only be called after calling finish())
+     *
+     * @return mixed
+     */
     public function getCertificateInfo()
     {
         if (!$this->done) {
             throw new \LogicException('The method getCertificateInfo() can only be called after calling the finish() method');
         }
 
-        return $this->_certificateInfo;
+        return $this->certificateInfo;
     }
 
     public function __get($name)

@@ -30,13 +30,24 @@ class FileReference
     }
 
     /**
-     * @param $content string
+     * @param string $contentRaw
      * @return FileReference
      */
-    public static function fromBinary($content)
+    public static function fromContentRaw($contentRaw)
     {
         $obj = new self();
-        $obj->content = $content;
+        $obj->content = $contentRaw;
+        return $obj;
+    }
+
+    /**
+     * @param string $contentBase64
+     * @return FileReference
+     */
+    public static function fromContentBase64($contentBase64)
+    {
+        $obj = new self();
+        $obj->content = base64_decode($contentBase64);
         return $obj;
     }
 
@@ -69,7 +80,7 @@ class FileReference
         } elseif (isset($this->content)) {
 
             if (strlen($this->content) < $client->multipartUploadThreshold) {
-                return FileModel::fromContentBinary($this->content);
+                return FileModel::fromContentRaw($this->content);
             } else {
                 $model = $client->_uploadOrReadContent($this->content);
                 if (isset($model->blobToken)) {
@@ -81,7 +92,7 @@ class FileReference
         } else {
 
             if (filesize($this->path) < $client->multipartUploadThreshold) {
-                return FileModel::fromContentBinary(file_get_contents($this->path));
+                return FileModel::fromContentRaw(file_get_contents($this->path));
             } else {
                 return $client->_uploadOrReadFile($this->path);
             }
@@ -93,7 +104,7 @@ class FileReference
      * @return string
      * @throws \Exception
      */
-    public function getContentBinary()
+    public function getContentRaw()
     {
         if (isset($this->content)) {
 
@@ -117,7 +128,7 @@ class FileReference
      */
     public function getContentBase64()
     {
-        return base64_encode($this->getContentBinary());
+        return base64_encode($this->getContentRaw());
     }
 
     /**
@@ -132,7 +143,7 @@ class FileReference
             if (isset($this->path)) {
                 $digestHexValue = hash_file($algorithm->phpId, $this->path);
             } else {
-                $digestHexValue = hash($algorithm->phpId, $this->getContentBinary());
+                $digestHexValue = hash($algorithm->phpId, $this->getContentRaw());
             }
             $dataHash = array(
                 'algorithm' => $algorithm->id,
