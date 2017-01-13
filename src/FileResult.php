@@ -46,7 +46,7 @@ class FileResult
      */
     public function writeToFile($path) {
         if (isset($this->model->content)) {
-            file_put_contents($path, $this->model->content);
+            file_put_contents($path, base64_decode($this->model->content));
         } else {
             $this->client->_downloadToFile($this->model->url, $path);
         }
