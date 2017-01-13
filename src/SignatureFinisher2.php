@@ -26,6 +26,7 @@ abstract class SignatureFinisher2
     public function __construct($client)
     {
         $this->client = $client;
+        $this->forceBlobResult = false;
     }
 
     /**
@@ -54,11 +55,9 @@ abstract class SignatureFinisher2
         }
 
         $request = array(
-            'forceBlobResult' => $this->forceBlobResult
+            'forceBlobResult' => $this->forceBlobResult,
+            'signature' => $this->signatureBase64
         );
-        if (!empty($this->signatureBase64)) {
-            $request['signature'] = $this->signatureBase64;
-        }
         $response = $this->client->post($this->getApiRoute(), $request);
 
         return new SignatureResult($this->client, $response->signatureFile, $response->certificate, $response->callbackArgument);
