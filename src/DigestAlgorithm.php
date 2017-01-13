@@ -23,11 +23,11 @@ class DigestAlgorithm
     private function __construct($id)
     {
         switch ($id) {
-            case MD5:
-            case SHA1:
-            case SHA256:
-            case SHA384:
-            case SHA512:
+            case self::MD5:
+            case self::SHA1:
+            case self::SHA256:
+            case self::SHA384:
+            case self::SHA512:
                 $this->id = $id;
                 break;
             default:
@@ -39,35 +39,35 @@ class DigestAlgorithm
      * @return DigestAlgorithm The MD5 digest algorithm
      */
     public static function getMD5() {
-        return new DigestAlgorithm(MD5);
+        return new DigestAlgorithm(self::MD5);
     }
 
     /**
      * @return DigestAlgorithm The SHA-1 digest algorithm
      */
     public static function getSHA1() {
-        return new DigestAlgorithm(SHA1);
+        return new DigestAlgorithm(self::SHA1);
     }
 
     /**
      * @return DigestAlgorithm The SHA-256 digest algorithm
      */
     public static function getSHA256() {
-        return new DigestAlgorithm(SHA256);
+        return new DigestAlgorithm(self::SHA256);
     }
 
     /**
      * @return DigestAlgorithm The SHA-384 digest algorithm
      */
     public static function getSHA384() {
-        return new DigestAlgorithm(SHA384);
+        return new DigestAlgorithm(self::SHA384);
     }
 
     /**
      * @return DigestAlgorithm The SHA-512 digest algorithm
      */
     public static function getSHA512() {
-        return new DigestAlgorithm(SHA512);
+        return new DigestAlgorithm(self::SHA512);
     }
 
     /**
@@ -90,15 +90,15 @@ class DigestAlgorithm
      */
     public function getName() {
         switch ($this->id) {
-            case MD5:
+            case self::MD5:
                 return 'MD5';
-            case SHA1:
+            case self::SHA1:
                 return 'SHA-1';
-            case SHA256:
+            case self::SHA256:
                 return 'SHA-256';
-            case SHA384:
+            case self::SHA384:
                 return 'SHA-384';
-            case SHA512:
+            case self::SHA512:
                 return 'SHA-512';
             default:
                 throw new \RuntimeException(); // should not happen
@@ -110,15 +110,15 @@ class DigestAlgorithm
      */
     public function getPhpId() {
         switch ($this->id) {
-            case MD5:
+            case self::MD5:
                 return 'md5';
-            case SHA1:
+            case self::SHA1:
                 return 'sha1';
-            case SHA256:
+            case self::SHA256:
                 return 'sha256';
-            case SHA384:
+            case self::SHA384:
                 return 'sha384';
-            case SHA512:
+            case self::SHA512:
                 return 'sha512';
             default:
                 throw new \RuntimeException(); // should not happen
@@ -131,15 +131,15 @@ class DigestAlgorithm
     public function getHashId()
     {
         switch ($this->id) {
-            case MD5:
+            case self::MD5:
                 return MHASH_MD5;
-            case SHA1:
+            case self::SHA1:
                 return MHASH_SHA1;
-            case SHA256:
+            case self::SHA256:
                 return MHASH_SHA256;
-            case SHA384:
+            case self::SHA384:
                 return MHASH_SHA384;
-            case SHA512:
+            case self::SHA512:
                 return MHASH_SHA512;
             default:
                 throw new \RuntimeException(); // should not happen
