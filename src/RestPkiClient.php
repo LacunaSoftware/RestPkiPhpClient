@@ -362,30 +362,6 @@ class RestPkiClient
     }
 
     /**
-     * @internal
-     *
-     * @param $apiAlg
-     * @return string
-     */
-    public static function _getPhpDigestAlgorithm($apiAlg)
-    {
-        // "SHA1" -> "sha1"
-        return strtolower($apiAlg);
-    }
-
-    /**
-     * @internal
-     *
-     * @param $phpAlg
-     * @return string
-     */
-    public static function _getApiDigestAlgorithm($phpAlg)
-    {
-        // "sha1" -> "SHA1"
-        return strtoupper($phpAlg);
-    }
-
-    /**
      * @param $endpointUrl string
      * @return int|null
      */

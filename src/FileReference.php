@@ -120,18 +120,22 @@ class FileReference
         return base64_encode($this->getContentBinary());
     }
 
+    /**
+     * @param DigestAlgorithm[] $algorithms
+     * @return array
+     */
     public function computeDataHashes($algorithms) {
 
         $dataHashes = array();
         foreach ($algorithms as $algorithm) {
             $digestHexValue = null;
             if (isset($this->path)) {
-                $digestHexValue = hash_file($algorithm, $this->path);
+                $digestHexValue = hash_file($algorithm->phpId, $this->path);
             } else {
-                $digestHexValue = hash($algorithm, $this->getContentBinary());
+                $digestHexValue = hash($algorithm->phpId, $this->getContentBinary());
             }
             $dataHash = array(
-                'algorithm' => RestPkiClient::_getApiDigestAlgorithm($algorithm),
+                'algorithm' => $algorithm->id,
                 'hexValue' => $digestHexValue
             );
             array_push($dataHashes, $dataHash);

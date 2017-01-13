@@ -6,14 +6,14 @@ namespace Lacuna\RestPki\Client;
  * Class CadesSignatureStarter
  * @package Lacuna\RestPki\Client
  *
- * @property $encapsulateContent bool|null
- * @property $digestAlgorithmsForDetachedSignature string[]
+ * @property bool|null $encapsulateContent
+ * @property DigestAlgorithm[] $digestAlgorithmsForDetachedSignature
  */
 class CadesSignatureStarter extends SignatureStarter
 {
     public $encapsulateContent;
 
-    public $digestAlgorithmsForDetachedSignature = array('sha1', 'sha256');
+    public $digestAlgorithmsForDetachedSignature;
 
     /** @var FileReference */
     private $fileToSign;
@@ -27,6 +27,7 @@ class CadesSignatureStarter extends SignatureStarter
     public function __construct($client)
     {
         parent::__construct($client);
+        $this->digestAlgorithmsForDetachedSignature = array(DigestAlgorithm::getSHA1(), DigestAlgorithm::getSHA256());
     }
 
     #region setFileToSign

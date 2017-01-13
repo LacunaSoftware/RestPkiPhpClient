@@ -30,7 +30,7 @@ class PadesSignatureExplorer extends SignatureExplorer
 
         foreach ($response->signers as $signer) {
             $signer->validationResults = new ValidationResults($signer->validationResults);
-            $signer->messageDigest->algorithm = RestPkiClient::_getPhpDigestAlgorithm($signer->messageDigest->algorithm);
+            $signer->messageDigest->algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($signer->messageDigest->algorithm);
             if (isset($signer->signingTime)) {
                 $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
             }
