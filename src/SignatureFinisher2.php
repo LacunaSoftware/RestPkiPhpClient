@@ -2,6 +2,10 @@
 
 namespace Lacuna\RestPki\Client;
 
+/**
+ * Class SignatureFinisher2
+ * @package Lacuna\RestPki\Client
+ */
 abstract class SignatureFinisher2
 {
     /** @var string */
@@ -53,7 +57,7 @@ abstract class SignatureFinisher2
             'forceBlobResult' => $this->forceBlobResult,
             'signature' => $this->signatureBase64
         );
-        $response = $this->client->post(self::getApiRoute(), $request);
+        $response = $this->client->post($this->getApiRoute(), $request);
 
         return new SignatureResult($this->client, $response->signatureFile, $response->certificate, $response->callbackArgument);
     }
