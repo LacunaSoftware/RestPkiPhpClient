@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * Class ValidationItem
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  *
  * @property-read $type string
  * @property-read $message string

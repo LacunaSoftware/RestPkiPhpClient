@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * Class PadesSignatureExplorer
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  */
 class PadesSignatureExplorer extends SignatureExplorer
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * Class SignatureFinisher2
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  */
 abstract class SignatureFinisher2
 {

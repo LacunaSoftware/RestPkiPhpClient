@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * Class Color
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  */
 class Color
 {

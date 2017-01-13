@@ -1,10 +1,10 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * Class DigestAlgorithm
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  *
  * @property string $id The ID of the algorithm on Rest PKI's API
  * @property string $name A friendly name for the algorithm

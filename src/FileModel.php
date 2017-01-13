@@ -1,12 +1,12 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * @internal
  *
  * Class FileModel
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  */
 class FileModel
 {

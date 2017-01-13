@@ -1,12 +1,12 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 /**
  * @deprecated Use CadesSignatureFinisher2 instead
  *
  * Class CadesSignatureFinisher
- * @package Lacuna\RestPki\Client
+ * @package Lacuna\RestPkiClient
  */
 class CadesSignatureFinisher extends SignatureFinisher
 {

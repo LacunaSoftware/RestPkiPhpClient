@@ -1,6 +1,6 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPkiClient;
 
 class CadesSignatureExplorer extends SignatureExplorer
 {
