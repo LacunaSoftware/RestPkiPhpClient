@@ -333,7 +333,7 @@ class RestPkiClient
 
         switch ($api) {
 
-            case "StartCades":
+            case 'StartCades':
                 if (version_compare($v, '1.11') >= 0) {
                     return 3;
                 } elseif (version_compare($v, '1.10') >= 0) {
@@ -342,14 +342,28 @@ class RestPkiClient
                     return 1;
                 }
 
-            case "StartPades":
+            case 'CompleteCades':
                 if (version_compare($v, '1.11') >= 0) {
                     return 2;
                 } else {
                     return 1;
                 }
 
-            case "MultipartUpload":
+            case 'StartPades':
+                if (version_compare($v, '1.11') >= 0) {
+                    return 2;
+                } else {
+                    return 1;
+                }
+
+            case 'CompletePades':
+                if (version_compare($v, '1.11') >= 0) {
+                    return 2;
+                } else {
+                    return 1;
+                }
+
+            case 'MultipartUpload':
                 if (version_compare($v, '1.11') >= 0) {
                     return 1;
                 } else {

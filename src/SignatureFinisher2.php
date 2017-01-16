@@ -45,13 +45,14 @@ abstract class SignatureFinisher2
      * @throws RestPkiException
      * @throws RestUnreachableException
      * @throws ValidationException
-     * @throws \Exception
      */
     public function finish() {
 
         if (empty($this->token)) {
-            throw new \Exception("The token was not set");
+            throw new \LogicException("The token was not set");
         }
+
+        $this->checkCompatibility();
 
         $request = array(
             'forceBlobResult' => $this->forceBlobResult,
@@ -66,4 +67,6 @@ abstract class SignatureFinisher2
      * @return string
      */
     protected abstract function getApiRoute();
+
+    protected abstract function checkCompatibility();
 }
