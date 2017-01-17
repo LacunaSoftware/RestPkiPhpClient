@@ -9,8 +9,8 @@ to upgrade your application to use the new version of the library, now shipped a
 
 	```json
 	"require": {
-		//"guzzlehttp/guzzle": "^6.0"
-		"lacuna/restpki-client" : "^2.0.1"
+		~~"guzzlehttp/guzzle": "^6.0"~~
+		"lacuna/restpki-client": "^2.0.1"
 	}
 	```
 
