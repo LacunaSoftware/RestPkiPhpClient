@@ -18,3 +18,8 @@ Samples
 
 Please visit the [REST PKI samples repository](https://github.com/LacunaSoftware/RestPkiSamples/tree/master/PHP)
 for examples on how to use this library.
+
+Upgrade from 1.x
+----------------
+
+[Click here](UpgradeFromV1.md) for instructions on how to upgrade from the older `RestPki.php` file
