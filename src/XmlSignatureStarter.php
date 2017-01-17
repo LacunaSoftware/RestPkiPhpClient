@@ -1,30 +1,84 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class XmlSignatureStarter
+ * @package Lacuna\RestPki
+ *
+ * @property $signatureElementId string
+ */
 abstract class XmlSignatureStarter extends SignatureStarter
 {
-    protected $xmlContent;
-    protected $signatureElementId;
+    public $signatureElementId;
+
+    /** @var FileReference */
+    protected $xmlToSign;
     protected $signatureElementLocationXPath;
     protected $signatureElementLocationNsm;
     protected $signatureElementLocationInsertionOption;
 
-    protected function __construct($restPkiClient)
+    /**
+     * @param RestPkiClient $client
+     */
+    protected function __construct($client)
     {
-        parent::__construct($restPkiClient);
+        parent::__construct($client);
     }
 
-    public function setXmlFileToSign($xmlPath)
+    #region setXmlToSign
+
+    /**
+     * @param $path string The path of the XML file to be signed
+     */
+    public function setXmlToSignFromPath($path)
     {
-        $this->xmlContent = file_get_contents($xmlPath);
+        $this->xmlToSign = FileReference::fromFile($path);
     }
 
-    public function setXmlContentToSign($content)
+    /**
+     * @param $contentRaw string The raw (binary) contents of the XML file to be signed
+     */
+    public function setXmlToSignFromContentRaw($contentRaw)
     {
-        $this->xmlContent = $content;
+        $this->xmlToSign = FileReference::fromContentRaw($contentRaw);
     }
 
+    /**
+     * @param $contentBase64 string The base64-encoded contents of the XML file to be signed
+     */
+    public function setXmlToSignFromContentBase64($contentBase64)
+    {
+        $this->xmlToSign = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Alias of function setXmlToSignFromPath
+     *
+     * @param $path string The path of the XML file to be signed
+     */
+    public function setXmlToSignPath($path)
+    {
+        $this->setXmlToSignFromPath($path);
+    }
+
+    /**
+     * Alias of function setXmlToSignFromContentRaw
+     *
+     * @param $content string The raw (binary) contents of the XML file to be signed
+     */
+    public function setXmlToSignContent($content)
+    {
+        $this->setXmlToSignFromContentRaw($content);
+    }
+
+    #endregion
+
+    /**
+     * @param string $xpath
+     * @param string $insertionOption
+     * @param $namespaceManager
+     */
     public function setSignatureElementLocation($xpath, $insertionOption, $namespaceManager = null)
     {
         $this->signatureElementLocationXPath = $xpath;
@@ -32,7 +86,12 @@ abstract class XmlSignatureStarter extends SignatureStarter
         $this->signatureElementLocationNsm = $namespaceManager;
     }
 
-    public function setSignatureElement($signatureElementId)
+    /**
+     * Alias of setting the property `signatureElementId`
+     *
+     * @param string $signatureElementId
+     */
+    public function setSignatureElementId($signatureElementId)
     {
         $this->signatureElementId = $signatureElementId;
     }
@@ -40,24 +99,25 @@ abstract class XmlSignatureStarter extends SignatureStarter
     protected function verifyCommonParameters($isWithWebPki = false)
     {
         if (!$isWithWebPki) {
-            if (empty($this->signerCertificate)) {
-                throw new \Exception('The certificate was not set');
+            if (empty($this->signerCertificateBase64)) {
+                throw new \LogicException("The signer certificate was not set");
             }
         }
-        if (empty($this->signaturePolicyId)) {
-            throw new \Exception('The signature policy was not set');
+        if (empty($this->signaturePolicy)) {
+            throw new \LogicException('The signature policy was not set');
         }
     }
 
     protected function getRequest()
     {
         $request = array(
-            'signaturePolicyId' => $this->signaturePolicyId,
-            'securityContextId' => $this->securityContextId,
+            'certificate' => $this->signerCertificateBase64,
+            'signaturePolicyId' => $this->signaturePolicy,
+            'securityContextId' => $this->securityContext,
             'signatureElementId' => $this->signatureElementId
         );
-        if ($this->xmlContent != null) {
-            $request['xml'] = base64_encode($this->xmlContent);
+        if (isset($this->xmlToSign)) {
+            $request['xml'] = $this->xmlToSign->getContentBase64();
         }
         if ($this->signatureElementLocationXPath != null && $this->signatureElementLocationInsertionOption != null) {
             $request['signatureElementLocation'] = array(

@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PadesMeasurementUnits
+ * @package Lacuna\RestPki
+ */
 class PadesMeasurementUnits
 {
     const CENTIMETERS = "Centimeters";

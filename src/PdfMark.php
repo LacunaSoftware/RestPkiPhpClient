@@ -1,7 +1,17 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfMark
+ * @package Lacuna\RestPki
+ *
+ * @property mixed $container
+ * @property float $borderWidth
+ * @property Color|null $borderColor
+ * @property Color|null $backgroundColor
+ * @property array $elements
+ */
 class PdfMark
 {
     public $container;

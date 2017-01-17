@@ -1,63 +1,144 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class SignatureExplorer
+ * @package Lacuna\RestPki
+ *
+ * @property bool $validate
+ * @property string $defaultSignaturePolicy
+ * @property string[] $acceptableExplicitPolicies
+ * @property string $securityContext
+ */
 abstract class SignatureExplorer
 {
+    public $validate;
+    public $defaultSignaturePolicy;
+    public $acceptableExplicitPolicies;
+    public $securityContext;
 
     /** @var RestPkiClient */
-    protected $restPkiClient;
-    protected $signatureFileContent;
-    protected $validate;
-    protected $defaultSignaturePolicyId;
-    protected $acceptableExplicitPolicies;
-    protected $securityContextId;
+    protected $client;
 
-    protected function __construct($restPkiClient)
+    /** @var FileReference */
+    protected $signatureFile;
+
+    /**
+     * @param RestPkiClient $client
+     */
+    protected function __construct($client)
     {
-        $this->restPkiClient = $restPkiClient;
+        $this->client = $client;
+        $this->validate = true;
     }
 
-    public function setSignatureFile($filePath)
+    #region setSignatureFile
+
+    /**
+     * @param $path string The path of the signature file to be opened
+     */
+    public function setSignatureFileFromPath($path)
     {
-        $this->signatureFileContent = file_get_contents($filePath);
+        $this->signatureFile = FileReference::fromFile($path);
     }
 
+    /**
+     * Sets the raw (binary) contents of the signature file to be opened
+     *
+     * @param $contentRaw string The raw (binary) contents of the signature file to be opened
+     */
+    public function setSignatureFileFromContentRaw($contentRaw)
+    {
+        $this->signatureFile = FileReference::fromContentRaw($contentRaw);
+    }
+
+    /**
+     * Sets the base64-encoded contents of the signature file to be opened
+     *
+     * @param $contentBase64 string The base64-encoded contents of the signature file to be opened
+     */
+    public function setSignatureFileFromContentBase64($contentBase64)
+    {
+        $this->signatureFile = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Sets the signature file to be opened from the result of a previous operation on Rest PKI
+     *
+     * @param $fileResult FileResult The result of a previous operation on Rest PKI
+     */
+    public function setSignatureFileFromResult($fileResult)
+    {
+        $this->signatureFile = FileReference::fromResult($fileResult);
+    }
+
+    /**
+     * Alias of function setSignatureFileFromPath
+     *
+     * @param $path string The path of the signature file to be opened
+     */
+    public function setSignatureFile($path)
+    {
+        $this->setSignatureFileFromPath($path);
+    }
+
+    #endregion
+
+    /**
+     * Alias of setting property `validate`
+     *
+     * @param bool $validate
+     */
     public function setValidate($validate)
     {
         $this->validate = $validate;
     }
 
-    public function setDefaultSignaturePolicy($signaturePolicyId)
+    /**
+     * Alias of setting property `defaultSignaturePolicy`
+     *
+     * @param string $signaturePolicyId
+     */
+    public function setDefaultSignaturePolicyId($signaturePolicyId)
     {
-        $this->defaultSignaturePolicyId = $signaturePolicyId;
+        $this->defaultSignaturePolicy = $signaturePolicyId;
     }
 
+    /**
+     * Alias of setting property `acceptableExplicitPolicies`
+     *
+     * @param string[] $policyCatalog
+     */
     public function setAcceptableExplicitPolicies($policyCatalog)
     {
         $this->acceptableExplicitPolicies = $policyCatalog;
     }
 
-    public function setSecurityContext($securityContextId)
+    /**
+     * Alias of setting property `securityContext`
+     *
+     * @param string $securityContext
+     */
+    public function setSecurityContextId($securityContext)
     {
-        $this->securityContextId = $securityContextId;
+        $this->securityContext = $securityContext;
     }
 
-    protected function getRequest($mimeType)
+    protected function getRequest()
     {
+        if (empty($this->signatureFile)) {
+            throw new \RuntimeException("The signature file to open not set");
+        }
+
         $request = array(
-            "validate" => $this->validate,
-            "defaultSignaturePolicyId" => $this->defaultSignaturePolicyId,
-            "securityContextId" => $this->securityContextId,
-            "acceptableExplicitPolicies" => $this->acceptableExplicitPolicies
+            'validate' => $this->validate,
+            'defaultSignaturePolicyId' => $this->defaultSignaturePolicy,
+            'securityContextId' => $this->securityContext,
+            'acceptableExplicitPolicies' => $this->acceptableExplicitPolicies
         );
 
-        if (!empty($this->signatureFileContent)) {
-            $request['file'] = array(
-                "content" => base64_encode($this->signatureFileContent),
-                "mimeType" => $mimeType
-            );
-        }
+        $request['file'] = $this->signatureFile->uploadOrReference($this->client);
 
         return $request;
     }

@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class StandardSecurityContexts
+ * @package Lacuna\RestPki
+ */
 class StandardSecurityContexts
 {
     const PKI_BRAZIL = '201856ce-273c-4058-a872-8937bd547d36';

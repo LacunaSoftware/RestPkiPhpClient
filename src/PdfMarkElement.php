@@ -1,26 +1,29 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfMarkElement
+ * @package Lacuna\RestPki
+ *
+ * @property string $elementType
+ * @property mixed|null $relativeContainer
+ * @property int $rotation
+ */
 class PdfMarkElement
 {
     public $elementType;
     public $relativeContainer;
     public $rotation;
 
-    public function __construct()
+    /**
+     * @param string $elementType
+     * @param mixed|null $relativeContainer
+     */
+    public function __construct($elementType, $relativeContainer = null)
     {
-        $args = func_get_args();
-        if (sizeof($args) == 1) { // Case (elementType)
-            $this->elementType = $args[0];
-            $this->rotation = 0;
-        } else {
-            if (sizeof($args) == 2) { // Case (elementType, relativeContainer)
-                $this::__construct($args[0]);
-                $this->relativeContainer = $args[1];
-            } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkElement's constructor.");
-            }
-        }
+        $this->rotation = 0;
+        $this->elementType = $elementType;
+        $this->relativeContainer = $relativeContainer;
     }
 }

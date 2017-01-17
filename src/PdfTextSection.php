@@ -1,7 +1,16 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfTextSection
+ * @package Lacuna\RestPki
+ *
+ * @property string $style
+ * @property string $text
+ * @property Color $color
+ * @property float|null $fontSize
+ */
 class PdfTextSection
 {
     public $style;
@@ -9,27 +18,20 @@ class PdfTextSection
     public $color;
     public $fontSize;
 
-    public function __construct()
+    /**
+     * @param string|null $text
+     * @param Color|null $color
+     * @param float|null $fontSize
+     */
+    public function __construct($text = null, $color = null, $fontSize = null)
     {
-        $args = func_get_args();
-        if (sizeof($args) == 0) { // Case ()
-            $this->style = PdfTextStyle::NORMAL;
+        $this->style = PdfTextStyle::NORMAL;
+        $this->text = $text;
+        $this->fontSize = $fontSize;
+        if (empty($color)) {
             $this->color = new Color('#000000'); // Black
         } else {
-            if (sizeof($args) == 2) { // Case (text, color)
-                $this::__construct();
-                $this->text = $args[0];
-                $this->color = $args[1];
-            } else {
-                if (sizeof($args) == 3) { // Case (text, color, fontSize)
-                    $this::__construct();
-                    $this->text = $args[0];
-                    $this->color = $args[1];
-                    $this->fontSize = $args[2];
-                } else {
-                    throw new \InvalidArgumentException("Invalid parameters passed to the PdfTextSection's constructor.");
-                }
-            }
+            $this->color = $color;
         }
     }
 }

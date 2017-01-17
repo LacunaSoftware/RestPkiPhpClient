@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class StandardSignaturePolicyCatalog
+ * @package Lacuna\RestPki
+ */
 class StandardSignaturePolicyCatalog
 {
     public static function getPkiBrazilCades()

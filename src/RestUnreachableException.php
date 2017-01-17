@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class RestUnreachableException
+ * @package Lacuna\RestPki
+ */
 class RestUnreachableException extends RestException
 {
     public function __construct($verb, $url, \Exception $previous)

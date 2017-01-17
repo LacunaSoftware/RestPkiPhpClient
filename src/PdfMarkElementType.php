@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfMarkElementType
+ * @package Lacuna\RestPki
+ */
 class PdfMarkElementType
 {
     const TEXT = "Text";

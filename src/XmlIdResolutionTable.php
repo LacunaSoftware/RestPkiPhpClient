@@ -1,12 +1,18 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class XmlIdResolutionTable
+ * @package Lacuna\RestPki
+ */
 class XmlIdResolutionTable
 {
-
     private $model;
 
+    /**
+     * @param bool|null $includeXmlIdGlobalAttribute
+     */
     public function __construct($includeXmlIdGlobalAttribute = null)
     {
         $this->model = array(
@@ -16,6 +22,10 @@ class XmlIdResolutionTable
         );
     }
 
+    /**
+     * @param string $idAttributeLocalName
+     * @param string|null $idAttributeNamespace
+     */
     public function addGlobalIdAttribute($idAttributeLocalName, $idAttributeNamespace = null)
     {
         $this->model['globalIdAttributes'][] = array(
@@ -24,6 +34,12 @@ class XmlIdResolutionTable
         );
     }
 
+    /**
+     * @param string $elementLocalName
+     * @param string|null $elementNamespace
+     * @param string $idAttributeLocalName
+     * @param string|null $idAttributeNamespace
+     */
     public function setElementIdAttribute(
         $elementLocalName,
         $elementNamespace,
@@ -42,6 +58,11 @@ class XmlIdResolutionTable
         );
     }
 
+    /**
+     * @internal
+     *
+     * @return array
+     */
     public function toModel()
     {
         return $this->model;

@@ -1,55 +1,189 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PadesSignatureStarter
+ * @package Lacuna\RestPki
+ *
+ * @property $measurementUnits string
+ * @property $pageOptimization string
+ * @property $bypassMarksIfSigned bool|null
+ * @property $visualRepresentation
+ * @property $pdfMarks
+ */
 class PadesSignatureStarter extends SignatureStarter
 {
 
-    private $pdfContent;
     public $measurementUnits;
     public $pageOptimization;
     public $bypassMarksIfSigned;
     public $visualRepresentation;
     public $pdfMarks;
 
-    public function __construct($restPkiClient)
+    /** @var FileReference */
+    private $pdfToSign;
+
+    /**
+     * @param RestPkiClient $client
+     */
+    public function __construct($client)
     {
-        parent::__construct($restPkiClient);
+        parent::__construct($client);
         $this->bypassMarksIfSigned = true;
         $this->done = false;
         $this->pdfMarks = [];
         $this->measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     }
 
-    public function setPdfFileToSign($pdfPath)
+    #region setPdfToSign
+
+    /**
+     * @param $path string The path of the PDF file to be signed
+     */
+    public function setPdfToSignFromPath($path)
     {
-        $this->pdfContent = file_get_contents($pdfPath);
+        $this->pdfToSign = FileReference::fromFile($path);
     }
 
-    public function setPdfContentToSign($content)
+    /**
+     * Sets the raw (binary) contents of the PDF file to be signed
+     *
+     * @param $contentRaw string The raw (binary) contents of the PDF file to be signed
+     */
+    public function setPdfToSignFromContentRaw($contentRaw)
     {
-        $this->pdfContent = $content;
+        $this->pdfToSign = FileReference::fromContentRaw($contentRaw);
     }
 
+    /**
+     * Sets the base64-encoded contents of the PDF file to be signed
+     *
+     * @param $contentBase64 string The base64-encoded contents of the PDF file to be signed
+     */
+    public function setPdfToSignFromContentBase64($contentBase64)
+    {
+        $this->pdfToSign = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * @param $fileResult FileResult The result of a previous PAdES signature on Rest PKI
+     */
+    public function setPdfToSignFromResult($fileResult)
+    {
+        $this->pdfToSign = FileReference::fromResult($fileResult);
+    }
+
+    /**
+     * Alias of function setPdfToSignFromPath
+     *
+     * @param $path string The path of the PDF file to be signed
+     */
+    public function setPdfToSignPath($path)
+    {
+        $this->setPdfToSignFromPath($path);
+    }
+
+    /**
+     * Alias of function setPdfToSignFromContentRaw
+     *
+     * @param $contentRaw string The raw (binary) contents of the PDF file to be signed
+     */
+    public function setPdfToSignContent($contentRaw)
+    {
+        $this->setPdfToSignFromContentRaw($contentRaw);
+    }
+
+    #endregion
+
+    /**
+     * Alias of setting the property `visualRepresentation`
+     *
+     * @param $visualRepresentation
+     */
     public function setVisualRepresentation($visualRepresentation)
     {
         $this->visualRepresentation = $visualRepresentation;
     }
 
+    /**
+     * @return string
+     */
     public function startWithWebPki()
     {
+        $response = $this->startCommon();
 
-        if (empty($this->pdfContent)) {
-            throw new \Exception("The PDF to sign was not set");
+        if (isset($response->certificate)) {
+            $this->_certificateInfo = $response->certificate;
         }
-        if (!isset($this->signaturePolicyId)) {
-            throw new \Exception("The signature policy was not set");
+        $this->done = true;
+
+        return $response->token;
+    }
+
+    /**
+     * @return SignatureAlgorithmParameters
+     */
+    public function start()
+    {
+        if (empty($this->signerCertificateBase64)) {
+            throw new \LogicException("The signer certificate was not set");
         }
+
+        $response = $this->startCommon();
+
+        if (isset($response->certificate)) {
+            $this->_certificateInfo = $response->certificate;
+        }
+        $this->done = true;
+
+        return self::getClientSideInstructionsObject($response);
+    }
+
+    private function startCommon()
+    {
+        if (empty($this->pdfToSign)) {
+            throw new \LogicException("The PDF to sign was not set");
+        }
+        if (empty($this->signaturePolicy)) {
+            throw new \LogicException("The signature policy was not set");
+        }
+
+        $apiVersion = $this->client->_getApiVersion('StartPades');
+
+        switch ($apiVersion) {
+            case 1:
+                return $this->startCommonV1();
+            default:
+                return $this->startCommonV2();
+        }
+    }
+
+    private function startCommonV1() {
 
         $request = array(
-            'pdfToSign' => base64_encode($this->pdfContent),
-            'signaturePolicyId' => $this->signaturePolicyId,
-            'securityContextId' => $this->securityContextId,
+            'certificate' => $this->signerCertificateBase64,
+            'signaturePolicyId' => $this->signaturePolicy,
+            'securityContextId' => $this->securityContext,
+            'callbackArgument' => $this->callbackArgument,
+            'pdfMarks' => $this->pdfMarks,
+            'bypassMarksIfSigned' => $this->bypassMarksIfSigned,
+            'measurementUnits' => $this->measurementUnits,
+            'pageOptimization' => $this->pageOptimization,
+            'visualRepresentation' => $this->visualRepresentation,
+        );
+
+        $request['pdfToSign'] = $this->pdfToSign->getContentBase64();
+
+        return $this->client->post('Api/PadesSignatures', $request);
+    }
+
+    private function startCommonV2() {
+
+        $request = array(
+            'certificate' => $this->signerCertificateBase64,
+            'signaturePolicyId' => $this->signaturePolicy,
+            'securityContextId' => $this->securityContext,
             'callbackArgument' => $this->callbackArgument,
             'pdfMarks' => $this->pdfMarks,
             'bypassMarksIfSigned' => $this->bypassMarksIfSigned,
@@ -57,18 +191,9 @@ class PadesSignatureStarter extends SignatureStarter
             'pageOptimization' => $this->pageOptimization,
             'visualRepresentation' => $this->visualRepresentation
         );
-        if (isset($this->certificate)) { // If it's set, encode in base64
-            $request['certificate'] = base64_encode($this->signerCertificate);
-        }
 
-        $response = $this->restPkiClient->post('Api/PadesSignatures', $request);
+        $request['pdfToSign'] = $this->pdfToSign->uploadOrReference($this->client);
 
-        if (isset($response->certificate)) {
-            $this->certificateInfo = $response->certificate;
-        }
-        $this->done = true;
-
-        return $response->token;
+        return $this->client->post('Api/v2/PadesSignatures', $request);
     }
-
 }

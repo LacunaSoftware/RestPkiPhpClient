@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfTextStyle
+ * @package Lacuna\RestPki
+ */
 class PdfTextStyle
 {
     const NORMAL = "Normal";

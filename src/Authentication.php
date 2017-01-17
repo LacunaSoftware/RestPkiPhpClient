@@ -1,37 +1,55 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class Authentication
+ * @package Lacuna\RestPki
+ *
+ * @property-read $certificate
+ */
 class Authentication
 {
-
     /** @var RestPkiClient */
-    private $restPkiClient;
+    private $client;
 
-    private $certificate;
+    private $_certificate;
     private $done = false;
 
-    public function __construct($restPkiClient)
+    /**
+     * @param RestPkiClient $client
+     */
+    public function __construct($client)
     {
-        $this->restPkiClient = $restPkiClient;
+        $this->client = $client;
     }
 
+    /**
+     * @param string $securityContextId
+     * @return string
+     * @throws RestUnreachableException
+     */
     public function startWithWebPki($securityContextId)
     {
         $request = array(
             'securityContextId' => $securityContextId
         );
 
-        $response = $this->restPkiClient->post('Api/Authentications', $request);
+        $response = $this->client->post('Api/Authentications', $request);
 
         return $response->token;
     }
 
+    /**
+     * @param string $token
+     * @return ValidationResults
+     * @throws RestUnreachableException
+     */
     public function completeWithWebPki($token)
     {
-        $response = $this->restPkiClient->post("Api/Authentications/$token/Finalize", null);
+        $response = $this->client->post("Api/Authentications/$token/Finalize", null);
         if (isset($response->certificate)) {
-            $this->certificate = $response->certificate;
+            $this->_certificate = $response->certificate;
         }
         $this->done = true;
 
@@ -41,9 +59,19 @@ class Authentication
     public function getCertificate()
     {
         if (!$this->done) {
-            throw new \Exception('The method getCertificate() can only be called after calling the completeWithWebPki method');
+            throw new \LogicException('The method getCertificate() can only be called after calling the completeWithWebPki method');
         }
-        return $this->certificate;
+        return $this->_certificate;
     }
 
+    public function __get($name)
+    {
+        switch ($name) {
+            case "certificate":
+                return $this->getCertificate();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

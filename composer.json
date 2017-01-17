@@ -1,7 +1,6 @@
 {
 	"name": "lacuna/restpki-client",
 	"type": "library",
-	"version": "1.0.0",
 	"description": "Client lib for Rest PKI",
 	"keywords": [ "lacuna", "client lib", "rest pki", "signature" ],
 	"homepage": "https://pki.rest/",
@@ -17,7 +16,7 @@
 	},
 	"autoload": {
         "psr-4": {
-            "Lacuna\\RestPki\\Client\\": "src/"
+            "Lacuna\\RestPki\\": "src/"
         }
     }
 }

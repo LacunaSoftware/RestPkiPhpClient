@@ -1,21 +1,46 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class ValidationException
+ * @package Lacuna\RestPki
+ *
+ * @property-read ValidationResults $validationResults
+ */
 class ValidationException extends RestException
 {
 
     /** @var ValidationResults */
-    private $validationResults;
+    private $_validationResults;
 
-    public function __construct($verb, $url, ValidationResults $validationResults)
+    /**
+     * @param string $verb
+     * @param string $url
+     * @param ValidationResults $validationResults
+     */
+    public function __construct($verb, $url, $validationResults)
     {
         parent::__construct($validationResults->__toString(), $verb, $url);
-        $this->validationResults = $validationResults;
+        $this->_validationResults = $validationResults;
     }
 
+    /**
+     * @return ValidationResults
+     */
     public function getValidationResults()
     {
-        return $this->validationResults;
+        return $this->_validationResults;
+    }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case "validationResults":
+                return $this->_validationResults;
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
     }
 }

@@ -1,45 +1,106 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class CadesSignatureExplorer
+ * @package Lacuna\RestPki
+ */
 class CadesSignatureExplorer extends SignatureExplorer
 {
     const CMS_SIGNATURE_MIME_TYPE = "application/pkcs7-signature";
 
-    private $dataFileContent;
+    /** @var FileReference */
+    private $dataFile;
 
+    /**
+     * @param RestPkiClient $client
+     */
     public function __construct($client)
     {
         parent::__construct($client);
     }
 
-    public function setDataFile($filePath)
+    #region setDataFile
+
+    /**
+     * Sets the detached data file's local path
+     *
+     * @param $path string The path of the detached data file
+     */
+    public function setDataFileFromPath($path)
     {
-        $this->dataFileContent = file_get_contents($filePath);
+        $this->dataFile = FileReference::fromFile($path);
     }
 
+    /**
+     * Sets the detached data file's raw (binary) contents
+     *
+     * @param $contentRaw string The raw (binary) contents of the detached data file
+     */
+    public function setDataFileFromContentRaw($contentRaw)
+    {
+        $this->dataFile = FileReference::fromContentRaw($contentRaw);
+    }
+
+    /**
+     * Sets the detached data file's base64-encoded contents
+     *
+     * @param $contentBase64 string The base64-encoded contents of the detached data file
+     */
+    public function setDataFileFromContentBase64($contentBase64)
+    {
+        $this->dataFile = FileReference::fromContentBase64($contentBase64);
+    }
+
+    /**
+     * Alias of the function setDataFileFromPath
+     *
+     * @param $path string The path of the detached data file
+     */
+    public function setDataFile($path)
+    {
+        $this->setDataFileFromPath($path);
+    }
+
+    #endregion
+
+    /**
+     * @return mixed The signature information
+     */
     public function open()
     {
-        $dataHashes = null;
-        if (empty($this->signatureFileContent)) {
-            throw new \RuntimeException("The signature file to open not set");
-        }
+        return $this->openCommon(false);
+    }
 
-        if (!empty($this->dataFileContent)) {
+    /**
+     * @return CadesSignatureWithEncapsulatedContent The signature information along with the extracted encapsulated content
+     */
+    public function openAndExtractContent()
+    {
+        $response = $this->openCommon(false);
+        return new CadesSignatureWithEncapsulatedContent($response,
+            new FileResult($this->client, $response->encapsulatedContent));
+    }
+
+    protected function openCommon($extractEncapsulatedContent)
+    {
+
+        $request = parent::getRequest();
+        $request['extractEncapsulatedContent'] = $extractEncapsulatedContent;
+
+        if (isset($this->dataFile)) {
             $requiredHashes = $this->getRequiredHashes();
             if (count($requiredHashes) > 0) {
-                $dataHashes = $this->computeDataHashes($this->dataFileContent, $requiredHashes);
+                $request['dataHashes'] = $this->dataFile->computeDataHashes($requiredHashes);
             }
         }
 
-        $request = $this->getRequest(self::CMS_SIGNATURE_MIME_TYPE);
-        $request['dataHashes'] = $dataHashes;
-        $response = $this->restPkiClient->post("Api/CadesSignatures/Open", $request);
+        $response = $this->client->post("Api/CadesSignatures/Open", $request);
 
         foreach ($response->signers as $signer) {
             $signer->validationResults = new ValidationResults($signer->validationResults);
             $signer->messageDigest->algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($signer->messageDigest->algorithm);
-
             if (isset($signer->signingTime)) {
                 $signer->signingTime = date("d/m/Y H:i:s P", strtotime($signer->signingTime));
             }
@@ -50,33 +111,12 @@ class CadesSignatureExplorer extends SignatureExplorer
 
     private function getRequiredHashes()
     {
-        $request = array(
-            "content" => base64_encode($this->signatureFileContent),
-            "mimeType" => self::CMS_SIGNATURE_MIME_TYPE
-        );
-
-        $response = $this->restPkiClient->post("Api/CadesSignatures/RequiredHashes", $request);
-
-        $algs = [];
-
+        $request = $this->signatureFile->uploadOrReference($this->client);
+        $response = $this->client->post("Api/CadesSignatures/RequiredHashes", $request);
+        $algs = array();
         foreach ($response as $alg) {
             array_push($algs, DigestAlgorithm::getInstanceByApiAlgorithm($alg));
         }
-
         return $algs;
-    }
-
-    private function computeDataHashes($dataFileStream, $algorithms)
-    {
-        $dataHashes = [];
-        foreach ($algorithms as $algorithm) {
-            $digestValue = mhash($algorithm->getHashId(), $dataFileStream);
-            $dataHash = array(
-                'algorithm' => $algorithm->getAlgorithm(),
-                'value' => base64_encode($digestValue)
-            );
-            array_push($dataHashes, $dataHash);
-        }
-        return $dataHashes;
     }
 }

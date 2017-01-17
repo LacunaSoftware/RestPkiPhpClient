@@ -1,7 +1,11 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class XmlInsertionOptions
+ * @package Lacuna\RestPki
+ */
 class XmlInsertionOptions
 {
     const APPEND_CHILD = 'AppendChild';

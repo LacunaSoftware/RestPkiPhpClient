@@ -1,24 +1,28 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class PdfMarkTextElement
+ * @package Lacuna\RestPki
+ *
+ * @property array $textSections
+ */
 class PdfMarkTextElement extends PdfMarkElement
 {
     public $textSections;
 
-    public function __construct()
+    /**
+     * @param mixed|null $relativeContainer
+     * @param array|null $textSections
+     */
+    public function __construct($relativeContainer = null, $textSections = null)
     {
-        $args = func_get_args();
-        if (sizeof($args) == 0) { // Case ()
-            $this->textSections = [];
-            parent::__construct(PdfMarkElementType::TEXT);
+        parent::__construct(PdfMarkElementType::TEXT, $relativeContainer);
+        if (empty($textSections)) {
+            $this->textSections = array();
         } else {
-            if (sizeof($args) == 2) { // Case (relativeContainer, sections)
-                $this->textSections = $args[1];
-                parent::__construct(PdfMarkElementType::TEXT, $args[0]);
-            } else {
-                throw new \InvalidArgumentException("Invalid parameters passed to the PdfMarkTextElement's constructor.");
-            }
+            $this->textSections = $textSections;
         }
     }
 }

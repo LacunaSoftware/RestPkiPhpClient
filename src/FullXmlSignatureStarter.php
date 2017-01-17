@@ -1,32 +1,66 @@
 <?php
 
-namespace Lacuna\RestPki\Client;
+namespace Lacuna\RestPki;
 
+/**
+ * Class FullXmlSignatureStarter
+ * @package Lacuna\RestPki
+ */
 class FullXmlSignatureStarter extends XmlSignatureStarter
 {
 
-    public function __construct($restPkiClient)
+    /**
+     * @param RestPkiClient $client
+     */
+    public function __construct($client)
     {
-        parent::__construct($restPkiClient);
+        parent::__construct($client);
     }
 
+    /**
+     * @return string
+     * @throws RestUnreachableException
+     */
     public function startWithWebPki()
     {
 
         parent::verifyCommonParameters(true);
-        if (empty($this->xmlContent)) {
-            throw new \Exception('The XML to sign was not set');
+        if (empty($this->xmlToSign)) {
+            throw new \LogicException('The XML was not set');
         }
 
         $request = parent::getRequest();
 
-        $response = $this->restPkiClient->post('Api/XmlSignatures/FullXmlSignature', $request);
+        $response = $this->client->post('Api/XmlSignatures/FullXmlSignature', $request);
 
         if (isset($response->certificate)) {
-            $this->certificateInfo = $response->certificate;
+            $this->_certificateInfo = $response->certificate;
         }
         $this->done = true;
 
         return $response->token;
+    }
+
+    /**
+     * @return SignatureAlgorithmParameters
+     * @throws RestUnreachableException
+     */
+    public function start()
+    {
+        parent::verifyCommonParameters(false);
+        if (empty($this->xmlToSign)) {
+            throw new \LogicException('The XML was not set');
+        }
+
+        $request = parent::getRequest();
+
+        $response = $this->client->post('Api/XmlSignatures/FullXmlSignature', $request);
+
+        if (isset($response->certificate)) {
+            $this->_certificateInfo = $response->certificate;
+        }
+        $this->done = true;
+
+        return self::getClientSideInstructionsObject($response);
     }
 }
