@@ -11,6 +11,9 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
     protected function getClient()
     {
+        if (strpos(Config::TOKEN, 'API ') !== false) {
+            $this->fail('The API access token was not set!');
+        }
         return new RestPkiClient(Config::ENDPOINT, Config::TOKEN);
     }
 
@@ -34,6 +37,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $cmd = __DIR__ . '\\bin\\PkiUtil\\PkiUtil.exe ' . $commandName . ' ' . implode(' ', $commandArgs);
         $output = [];
         $returnCode = -1;
+
         exec($cmd, $output, $returnCode);
 
         if ($returnCode != 0) {
@@ -122,10 +126,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
      */
     protected function signWithTestCertificate($toSignHashRaw, $digestAlg)
     {
-        $certThumbBase64 = base64_encode(hash('sha256', $this->getTestCertificateRaw(), true));
+        $certThumbHex = hash('sha1', $this->getTestCertificateRaw());
         $toSignHashBase64 = base64_encode($toSignHashRaw);
 
-        $output = $this->runPkiUtil('signHash', [$certThumbBase64, $toSignHashBase64, $digestAlg]);
+        $output = $this->runPkiUtil('signHash', [$certThumbHex, $toSignHashBase64, $digestAlg]);
 
         return base64_decode($output[0]);
     }
