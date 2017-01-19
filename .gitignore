@@ -2,3 +2,4 @@
 vendor/
 composer.lock
 tests/bin/PkiUtil/LacunaPkiLicense.config
+tests/token.txt

@@ -4,9 +4,6 @@ namespace Lacuna\RestPki\Tests;
 
 class Config
 {
-    // API access token
-    const TOKEN = 'API ACCESS TOKEN HERE';
-
     // Path to a file that is larger than the upload threshold (5MB)
     const TEST_PDF_PATH = 'V:\\KnowledgeBase\\Books\\Angular\\angularjs.pdf';
 

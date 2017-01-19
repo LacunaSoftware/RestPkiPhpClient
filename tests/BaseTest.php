@@ -11,10 +11,12 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
     protected function getClient()
     {
-        if (strpos(Config::TOKEN, 'API ') !== false) {
-            $this->fail('The API access token was not set!');
+        $tokenFilePath = __DIR__ . "\\token.txt";
+        if (!file_exists($tokenFilePath)) {
+            $this->fail('The file "token.txt" with the API access token was not found!');
         }
-        return new RestPkiClient(Config::ENDPOINT, Config::TOKEN);
+        $token = file_get_contents($tokenFilePath);
+        return new RestPkiClient(Config::ENDPOINT, $token);
     }
 
     protected function getClientAnonymous()
