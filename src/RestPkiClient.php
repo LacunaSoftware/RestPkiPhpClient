@@ -18,6 +18,12 @@ class RestPkiClient
     public $multipartUploadThreshold = 5 * 1024 * 1024; // 5 MB
     public $restPkiVersion;
 
+    /**
+     * @internal
+     * @var int
+     */
+    public $_uploadCount = 0;
+
     private $endpointUrl;
     private $accessToken;
     private static $endpointVersions = array();
@@ -222,6 +228,8 @@ class RestPkiClient
         );
         $this->post("Api/MultipartUploads/{$blobToken}", $endRequest);
 
+        $this->_uploadCount += 1;
+
         return $blobToken;
     }
 
@@ -258,6 +266,8 @@ class RestPkiClient
             'partETags' => $partETags
         );
         $this->post("MultipartUploads/{$blobToken}", $endRequest);
+
+        $this->_uploadCount += 1;
 
         return $blobToken;
     }
