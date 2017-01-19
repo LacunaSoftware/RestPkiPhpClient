@@ -2,6 +2,8 @@
 
 namespace Lacuna\RestPki\Tests;
 
+use Lacuna\RestPki\SignatureFinisher2;
+use Lacuna\RestPki\SignatureResult;
 use PHPUnit_Framework_TestCase;
 use Lacuna\RestPki\RestPkiClient;
 use Lacuna\RestPki\SignatureFinisher;
@@ -42,9 +44,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         exec($cmd, $output, $returnCode);
 
-        if ($returnCode != 0) {
-            $this->fail("PkiUtil.exe returned code $returnCode: " . implode('\r\n', $output));
-        }
+        $this->assertTrue($returnCode == 0, "PkiUtil.exe returned code $returnCode: " . implode('\r\n', $output));
 
         return $output;
     }
@@ -56,6 +56,51 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
      * @return string
      */
     protected function performSignature($signatureStarter, $signatureFinisher, $simulateWebPki)
+    {
+        if ($simulateWebPki) {
+
+            // Start signature
+
+            $token = $signatureStarter->startWithWebPki();
+
+            // Compute signature as Web PKI would
+
+            $this->signAsWebPki($token);
+
+            // Set finisher parameters
+
+            $signatureFinisher->token = $token;
+
+        } else {
+
+            // Start signature
+
+            $signatureStarter->setSignerCertificateBase64(self::getTestCertificateBase64());
+            $signatureParams = $signatureStarter->start();
+
+            // Compute signature
+
+            $signatureRaw = $this->signWithTestCertificate($signatureParams->toSignHash, $signatureParams->digestAlgorithmOid);
+
+            // Set finisher parameters
+
+            $signatureFinisher->token = $signatureParams->token;
+            $signatureFinisher->setSignatureRaw($signatureRaw);
+
+        }
+
+        // Complete signature
+
+        return $signatureFinisher->finish();
+    }
+
+    /**
+     * @param SignatureStarter $signatureStarter
+     * @param SignatureFinisher2 $signatureFinisher
+     * @param bool $simulateWebPki
+     * @return SignatureResult
+     */
+    protected function performSignature2($signatureStarter, $signatureFinisher, $simulateWebPki)
     {
         if ($simulateWebPki) {
 
@@ -139,6 +184,11 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     protected function checkPades($path, $expectedSignerCount)
     {
         $this->runPkiUtil('checkPades', [$path, $expectedSignerCount]);
+    }
+
+    protected function checkCades($path, $expectedSignerCount)
+    {
+        $this->runPkiUtil('checkCades', [$path, $expectedSignerCount]);
     }
 
     protected function getTempFilePath()
