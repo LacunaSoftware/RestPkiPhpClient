@@ -37,6 +37,7 @@ class XmlSignatureExplorer extends SignatureExplorer
 
             $signature->signature = array(
                 'value' => base64_decode($signature->signature->value),
+                'hexValue' => $signature->signature->hexValue,
                 'algorithm' => SignatureAlgorithm::getInstanceByApiAlgorithm($signature->signature->algorithmIdentifier->algorithm)
             );
 
