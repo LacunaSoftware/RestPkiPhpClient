@@ -9,7 +9,8 @@ namespace Lacuna\RestPki;
  * @property-read mixed $signature
  * @property-read FileResult $encapsulatedContent
  */
-class CadesSignatureWithEncapsulatedContent {
+class CadesSignatureWithEncapsulatedContent
+{
 
     private $_signature;
 
