@@ -138,8 +138,14 @@ abstract class SignatureStarter
         return $this->_certificateInfo;
     }
 
+    /**
+     * @return string
+     */
     public abstract function startWithWebPki();
 
+    /**
+     * @return SignatureAlgorithmParameters
+     */
     public abstract function start();
 
     public function __get($name)
