@@ -30,7 +30,13 @@ class XmlSignatureExplorer extends SignatureExplorer
 
         foreach ($response as $signature) {
             $signature->validationResults = new ValidationResults($signature->validationResults);
-            $signature->signature = SignatureAlgorithm::getInstanceByApiAlgorithm($signature->signature->algorithmIdentifier);
+
+            $signature->signature = array(
+                'value' => base64_decode($signature->signature->value),
+                'hexValue' => $signature->signature->hexValue,
+                'algorithm' => SignatureAlgorithm::getInstanceByApiAlgorithm($signature->signature->algorithmIdentifier->algorithm)
+            );
+
             if (isset($signature->signingTime)) {
                 $signature->signingTime = date("d/m/Y H:i:s P", strtotime($signature->signingTime));
             }
