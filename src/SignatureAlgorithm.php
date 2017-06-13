@@ -11,11 +11,11 @@ namespace Lacuna\RestPki;
  */
 class SignatureAlgorithm
 {
-    const MD5WithRSA = "MD5 with RSA";
-    const SHA1WithRSA = "SHA1 with RSA";
-    const SHA256WithRSA = "SHA256 with RSA";
-    const SHA384WithRSA = "SHA384 with RSA";
-    const SHA512WithRSA = "SHA512 with RSA";
+    const MD5WithRSA = "MD5WithRSA";
+    const SHA1WithRSA = "SHA1WithRSA";
+    const SHA256WithRSA = "SHA256WithRSA";
+    const SHA384WithRSA = "SHA384WithRSA";
+    const SHA512WithRSA = "SHA512WithRSA";
 
     private $id;
 
