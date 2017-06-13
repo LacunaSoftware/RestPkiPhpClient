@@ -9,7 +9,7 @@ to upgrade your application to use the new version of the library, now shipped a
 
 	```json
 	"require": {
-		"lacuna/restpki-client": "^2.0.1"
+		"lacuna/restpki-client": "^2.1.0"
 	}
 	```
 
