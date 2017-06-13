@@ -44,5 +44,7 @@ class XmlSignatureExplorer extends SignatureExplorer
                 $signature->certifiedDateReference = date("d/m/Y H:i:s P", strtotime($signature->certifiedDateReference));
             }
         }
+
+        return $response;
     }
 }
