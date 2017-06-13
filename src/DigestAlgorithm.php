@@ -38,35 +38,40 @@ class DigestAlgorithm
     /**
      * @return DigestAlgorithm The MD5 digest algorithm
      */
-    public static function getMD5() {
+    public static function getMD5()
+    {
         return new DigestAlgorithm(self::MD5);
     }
 
     /**
      * @return DigestAlgorithm The SHA-1 digest algorithm
      */
-    public static function getSHA1() {
+    public static function getSHA1()
+    {
         return new DigestAlgorithm(self::SHA1);
     }
 
     /**
      * @return DigestAlgorithm The SHA-256 digest algorithm
      */
-    public static function getSHA256() {
+    public static function getSHA256()
+    {
         return new DigestAlgorithm(self::SHA256);
     }
 
     /**
      * @return DigestAlgorithm The SHA-384 digest algorithm
      */
-    public static function getSHA384() {
+    public static function getSHA384()
+    {
         return new DigestAlgorithm(self::SHA384);
     }
 
     /**
      * @return DigestAlgorithm The SHA-512 digest algorithm
      */
-    public static function getSHA512() {
+    public static function getSHA512()
+    {
         return new DigestAlgorithm(self::SHA512);
     }
 
@@ -74,21 +79,24 @@ class DigestAlgorithm
      * @param string $apiDigestAlg Digest algorithm as expressed on Rest PKI's API
      * @return DigestAlgorithm
      */
-    public static function getInstanceByApiAlgorithm($apiDigestAlg) {
+    public static function getInstanceByApiAlgorithm($apiDigestAlg)
+    {
         return new DigestAlgorithm($apiDigestAlg);
     }
 
     /**
      * @return string The ID of the algorithm on Rest PKI's API
      */
-    public function getAlgorithm() {
+    public function getAlgorithm()
+    {
         return $this->id;
     }
 
     /**
      * @return string A friendly name for the algorithm
      */
-    public function getName() {
+    public function getName()
+    {
         switch ($this->id) {
             case self::MD5:
                 return 'MD5';
@@ -108,7 +116,8 @@ class DigestAlgorithm
     /**
      * @return string The algorithm name as expected by PHP's standard <b>hash_xxx</b> functions
      */
-    public function getPhpId() {
+    public function getPhpId()
+    {
         switch ($this->id) {
             case self::MD5:
                 return 'md5';

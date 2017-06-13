@@ -46,4 +46,12 @@ class StandardSignaturePolicyCatalog
             StandardSignaturePolicies::PADES_ICPBR_ADR_TEMPO
         );
     }
+
+    public static function getPkiBrazilXades()
+    {
+        return array(
+            StandardSignaturePolicies::XML_ICPBR_ADR_BASICA,
+            StandardSignaturePolicies::XML_ICPBR_ADR_TEMPO
+        );
+    }
 }

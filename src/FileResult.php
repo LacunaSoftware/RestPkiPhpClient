@@ -40,7 +40,8 @@ class FileResult
      *
      * @return string
      */
-    public function getContentRaw() {
+    public function getContentRaw()
+    {
         if (isset($this->model->content)) {
             return $this->model->content;
         } else {
@@ -54,7 +55,8 @@ class FileResult
      *
      * @return string
      */
-    public function getContentBase64() {
+    public function getContentBase64()
+    {
         return base64_encode($this->getContentRaw());
     }
 
@@ -63,7 +65,8 @@ class FileResult
      *
      * @param string $path
      */
-    public function writeToFile($path) {
+    public function writeToFile($path)
+    {
         if (isset($this->model->content)) {
             file_put_contents($path, base64_decode($this->model->content));
         } else {

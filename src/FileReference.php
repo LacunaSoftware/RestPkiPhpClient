@@ -135,7 +135,8 @@ class FileReference
      * @param DigestAlgorithm[] $algorithms
      * @return array
      */
-    public function computeDataHashes($algorithms) {
+    public function computeDataHashes($algorithms)
+    {
 
         $dataHashes = array();
         foreach ($algorithms as $algorithm) {

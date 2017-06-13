@@ -46,7 +46,8 @@ abstract class SignatureFinisher2
      * @throws RestUnreachableException
      * @throws ValidationException
      */
-    public function finish() {
+    public function finish()
+    {
 
         if (empty($this->token)) {
             throw new \LogicException("The token was not set");
@@ -60,7 +61,8 @@ abstract class SignatureFinisher2
         );
         $response = $this->client->post($this->getApiRoute(), $request);
 
-        return new SignatureResult($this->client, $response->signatureFile, $response->certificate, $response->callbackArgument);
+        return new SignatureResult($this->client, $response->signatureFile, $response->certificate,
+            $response->callbackArgument);
     }
 
     /**
