@@ -74,6 +74,16 @@ abstract class SignatureExplorer
     }
 
     /**
+     * Sets the signature file to be opened from the blob reference
+     *
+     * @param $fileBlob string The blob reference of the signature file to be opened
+     */
+    public function setSignatureFileFromBlob($fileBlob)
+    {
+        $this->signatureFile = FileReference::fromBlob($fileBlob);
+    }
+
+    /**
      * Alias of function setSignatureFileFromPath
      *
      * @param $path string The path of the signature file to be opened

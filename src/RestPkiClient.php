@@ -160,6 +160,33 @@ class RestPkiClient
     }
 
     /**
+     * @param string $path
+     * @return string The blob token referencing the file uploaded.
+     */
+    public function uploadFileFromPath($path)
+    {
+        return $this->_uploadFile($path);
+    }
+
+    /**
+     * @param string $contentRaw
+     * @return string The blob token referencing the file uploaded.
+     */
+    public function uploadFileFromContentRaw($contentRaw)
+    {
+        return $this->_uploadContent($contentRaw);
+    }
+
+    /**
+     * @param string $contentBase64
+     * @return string The blob token referencing the file uploaded.
+     */
+    public function uploadFileFromContentBase64($contentBase64)
+    {
+        return $this->_uploadContent($contentBase64);
+    }
+
+    /**
      * @internal
      *
      * @param $path
@@ -375,6 +402,13 @@ class RestPkiClient
 
             case 'MultipartUpload':
                 if (version_compare($v, '1.11') >= 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+
+            case 'AddPdfMarks':
+                if (version_compare($v, '1:13') >= 0) {
                     return 1;
                 } else {
                     return 0;

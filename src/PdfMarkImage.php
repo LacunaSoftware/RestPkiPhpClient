@@ -12,6 +12,12 @@ namespace Lacuna\RestPki;
 class PdfMarkImage
 {
     public $resource;
+
+    /**
+     * @deprecated
+     *
+     * @var $opacity integer
+     */
     public $opacity;
 
     /**
@@ -26,6 +32,21 @@ class PdfMarkImage
         }
         if (!empty($mimeType)) {
             $this->resource->mimeType = $mimeType;
+        }
+    }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case "opacity":
+                if (isset($this->opacity)) {
+                    return $this->opacity;
+                } else {
+                    return 100;
+                }
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
         }
     }
 }
