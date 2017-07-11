@@ -94,6 +94,6 @@ class PdfMarker
         );
         $request['file'] = $this->file->uploadOrReference($this->client);
         $response = $this->client->post('Api/Pdf/AddMarks', $request);
-        return new FileResult($this->client, $response->file);
+        return new FileResult($this->client, base64_decode($response->file));
     }
 }
