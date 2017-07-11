@@ -86,7 +86,7 @@ class PdfMarker
         }
 
         $request = array(
-            'pdfMarks' => $this->marks,
+            'marks' => $this->marks,
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
             'forceBlobResult' => $this->forceBlobResult,

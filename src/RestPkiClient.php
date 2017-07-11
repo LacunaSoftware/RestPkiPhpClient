@@ -183,7 +183,7 @@ class RestPkiClient
      */
     public function uploadFileFromContentBase64($contentBase64)
     {
-        return $this->_uploadContent($contentBase64);
+        return $this->_uploadContent(base64_decode($contentBase64));
     }
 
     /**
