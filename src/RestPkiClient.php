@@ -244,8 +244,6 @@ class RestPkiClient
             $partETag = $this->postRaw("Api/MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
             array_push($partETags, $partETag);
 
-            ob_flush();
-            flush();
             $partNumber += 1;
         }
         fclose($handle);
