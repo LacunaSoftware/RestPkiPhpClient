@@ -11,6 +11,8 @@ namespace Lacuna\RestPki;
  * @property Color|null $borderColor
  * @property Color|null $backgroundColor
  * @property array $elements
+ * @property string $pageOption
+ * @property int $pageOptionNumber
  */
 class PdfMark
 {
@@ -28,6 +30,6 @@ class PdfMark
         $this->borderColor = new Color("#000000"); // Black
         $this->backgroundColor = new Color("#FFFFFF", 0); // Transparent
         $this->elements = [];
-        $this->pageOption = 'AllPages';
+        $this->pageOption = PdfMarkPageOptions::ALL_PAGES;
     }
 }
