@@ -68,6 +68,17 @@ class FileReference
     }
 
     /**
+     * @param string $blob
+     * @return FileReference
+     */
+    public static function fromBlob($blob)
+    {
+        $obj = new self();
+        $obj->blobToken = $blob;
+        return $obj;
+    }
+
+    /**
      * @param $client RestPkiClient
      * @return FileModel The FileModel representing the file.
      */
