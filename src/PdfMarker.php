@@ -2,7 +2,16 @@
 
 namespace Lacuna\RestPki;
 
-
+/**
+ * Class PdfMarker
+ * @package Lacuna\RestPki
+ *
+ * @property string $measurementUnits
+ * @property string $pageOptimization
+ * @property bool $abortIfSigned
+ * @property array $marks
+ * @property bool $forceBlobResult
+ */
 class PdfMarker
 {
 

@@ -9,6 +9,7 @@ namespace Lacuna\RestPki;
  * @property string $elementType
  * @property mixed|null $relativeContainer
  * @property int $rotation
+ * @property int $opacity
  */
 class PdfMarkElement
 {
