@@ -78,7 +78,7 @@ class CadesSignatureExplorer extends SignatureExplorer
      */
     public function openAndExtractContent()
     {
-        $response = $this->openCommon(false);
+        $response = $this->openCommon(true);
         return new CadesSignatureWithEncapsulatedContent($response,
             new FileResult($this->client, $response->encapsulatedContent));
     }
