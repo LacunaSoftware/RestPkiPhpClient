@@ -37,9 +37,11 @@ class RestPkiClient
     public function getRestClient()
     {
         $libVersion = '2.2.3';
+        $platformVersion = phpversion();
         $headers = [
             'Accept' => 'application/json',
-            'X-RestPki-Client' => "PHP Standard $libVersion"
+            'X-RestPki-Client' => "PHP $libVersion",
+            'X-RestPki-Platform' => "PHP $platformVersion"
         ];
         if (!empty($this->accessToken)) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
