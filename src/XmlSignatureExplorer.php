@@ -22,7 +22,7 @@ class XmlSignatureExplorer extends SignatureExplorer
     }
 
     /**
-     * @return XmlSignature The signatures informations
+     * @return XmlSignature[] The signatures informations
      * @throws RestUnreachableException
      */
     public function open()
@@ -32,6 +32,10 @@ class XmlSignatureExplorer extends SignatureExplorer
 
         $response = $this->client->post("Api/XmlSignatures/Open", $request);
 
-        return new XmlSignature($response);
+        $signatures = [];
+        foreach ($response as $signature) {
+            $signatures[] = new XmlSignature($signature);
+        }
+        return $signatures;
     }
 }
