@@ -15,6 +15,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestPkiClient
 {
+    const LIB_VERSION = '2.2.5';
+
     public $multipartUploadThreshold = 5242880; // 5 MB
     public $restPkiVersion;
 
@@ -36,11 +38,9 @@ class RestPkiClient
 
     public function getRestClient()
     {
-        $libVersion = '2.2.3';
-        $platformVersion = phpversion();
         $headers = [
             'Accept' => 'application/json',
-            'X-RestPki-Client' => "PHP $libVersion"
+            'X-RestPki-Client' => 'PHP ' . RestPkiClient::LIB_VERSION
         ];
         if (!empty($this->accessToken)) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
