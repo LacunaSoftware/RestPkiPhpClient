@@ -132,6 +132,10 @@ class XmlSignature
     public function __get($attr)
     {
         switch ($attr) {
+            case "type":
+                return $this->getType();
+            case "signedElement":
+                return $this->getSignedElement();
             case "signaturePolicy":
                 return $this->getSignaturePolicy();
             case "certificate":
