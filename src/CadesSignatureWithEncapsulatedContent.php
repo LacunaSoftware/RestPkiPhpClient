@@ -41,4 +41,17 @@ class CadesSignatureWithEncapsulatedContent
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "signature":
+                return isset($this->_signature);
+            case "encapsulatedContent":
+                return isset($this->_encapsulatedContent);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

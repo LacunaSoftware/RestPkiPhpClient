@@ -66,4 +66,19 @@ class PkiItalyCertificateFields
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "certificateType":
+                return isset($this->_certificateType);
+            case "codiceFiscale":
+                return isset($this->_codiceFiscale);
+            case "idCarta":
+                return isset($this->_idCarta);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

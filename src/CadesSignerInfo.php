@@ -135,4 +135,27 @@ class CadesSignerInfo
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "messageDigest":
+                return isset($this->_messageDigest);
+            case "signaturePolicy":
+                return isset($this->_signaturePolicy);
+            case "certificate":
+                return isset($this->_certificate);
+            case "signingTime":
+                return isset($this->_signingTime);
+            case "certifiedDateReference":
+                return isset($this->_certifiedDateReference);
+            case "timestamps":
+                return isset($this->_timestamps);
+            case "validationResults":
+                return isset($this->_validationResults);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

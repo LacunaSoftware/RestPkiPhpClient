@@ -66,4 +66,18 @@ class CadesTimestamp extends CadesSignature
                 return parent::__get($prop);
         }
     }
+
+    public function __isset($prop)
+    {
+        switch ($prop) {
+            case "genTime":
+                return isset($this->_genTime);
+            case "serialNumber":
+                return isset($this->_serialNumber);
+            case "messageImprint":
+                return isset($this->_messageImprint);
+            default:
+                return parent::__isset($prop);
+        }
+    }
 }

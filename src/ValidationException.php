@@ -43,4 +43,15 @@ class ValidationException extends RestException
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "validationResults":
+                return isset($this->_validationResults);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

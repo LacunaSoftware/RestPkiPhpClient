@@ -60,4 +60,19 @@ class XmlAttributeInfo
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "localName":
+                return isset($this->_localName);
+            case "nameSpaceUri":
+                return isset($this->_nameSpaceUri);
+            case "value":
+                return isset($this->_value);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

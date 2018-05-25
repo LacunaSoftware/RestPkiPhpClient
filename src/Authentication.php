@@ -74,4 +74,15 @@ class Authentication
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "certificate":
+                return isset($this->_certificate);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

@@ -158,4 +158,15 @@ abstract class SignatureStarter
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "certificateInfo":
+                return isset($this->_certificateInfo);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }
