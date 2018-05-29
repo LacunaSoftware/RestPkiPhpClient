@@ -8,18 +8,18 @@ namespace Lacuna\RestPki;
  *
  * @property-read $localName string
  * @property-read $attributes XmlAttributeInfo[]
- * @property-read $nameSpaceUri string
+ * @property-read $namespaceUri string
  */
 class XmlElementInfo
 {
     private $_localName;
     private $_attributes = [];
-    private $_nameSpaceUri;
+    private $_namespaceUri;
 
     public function __construct($model)
     {
         $this->_localName = $model->localName;
-        $this->_nameSpaceUri = $model->nameSpaceUri;
+        $this->_namespaceUri = $model->namespaceUri;
         foreach ($model->attributes as $attribute) {
             $this->_attributes[] = new XmlAttributeInfo($attribute);
         }
@@ -50,9 +50,9 @@ class XmlElementInfo
      *
      * @return string namespace URI.
      */
-    public function getNameSpaceUri()
+    public function getNamespaceUri()
     {
-        return $this->_nameSpaceUri;
+        return $this->_namespaceUri;
     }
 
     public function __get($attr)
@@ -62,8 +62,8 @@ class XmlElementInfo
                 return $this->getLocalName();
             case "attributes":
                 return $this->getAttributes();
-            case "nameSpaceUri":
-                return $this->getNameSpaceUri();
+            case "namespaceUri":
+                return $this->getNamespaceUri();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
                 return null;
@@ -77,8 +77,8 @@ class XmlElementInfo
                 return isset($this->_localName);
             case "attributes":
                 return isset($this->_attributes);
-            case "nameSpaceUri":
-                return isset($this->_nameSpaceUri);
+            case "namespaceUri":
+                return isset($this->_namespaceUri);
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
                 return null;

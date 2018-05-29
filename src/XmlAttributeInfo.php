@@ -2,17 +2,24 @@
 
 namespace Lacuna\RestPki;
 
-
+/**
+ * Class XmlAttributeInfo
+ * @package Lacuna\RestPki
+ *
+ * @property-read $localName string
+ * @property-read $namespaceUri mixed
+ * @property-read $value mixed
+ */
 class XmlAttributeInfo
 {
     private $_localName;
-    private $_nameSpaceUri;
+    private $_namespaceUri;
     private $_value;
 
     public function __construct($model)
     {
         $this->_localName = $model->localName;
-        $this->_nameSpaceUri = $model->nameSpaceUri;
+        $this->_namespaceUri = $model->namespaceUri;
         $this->_value = $model->value;
     }
 
@@ -31,9 +38,9 @@ class XmlAttributeInfo
      *
      * @return string namespace URI.
      */
-    public function getNameSpaceUri()
+    public function getNamespaceUri()
     {
-        return $this->_nameSpaceUri;
+        return $this->_namespaceUri;
     }
 
     /**
@@ -51,8 +58,8 @@ class XmlAttributeInfo
         switch ($attr) {
             case "localName":
                 return $this->getLocalName();
-            case "nameSpaceUri":
-                return $this->getNameSpaceUri();
+            case "namespaceUri":
+                return $this->getNamespaceUri();
             case "value":
                 return $this->getValue();
             default:
@@ -66,8 +73,8 @@ class XmlAttributeInfo
         switch ($attr) {
             case "localName":
                 return isset($this->_localName);
-            case "nameSpaceUri":
-                return isset($this->_nameSpaceUri);
+            case "namespaceUri":
+                return isset($this->_namespaceUri);
             case "value":
                 return isset($this->_value);
             default:
