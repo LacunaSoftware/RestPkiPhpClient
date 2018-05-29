@@ -58,7 +58,7 @@ class PadesSignerInfo extends CadesSignerInfo
     {
         switch ($prop) {
             case "isDocumentTimestamp":
-                return isset($this->_isDocumentTimestamp_;
+                return isset($this->_isDocumentTimestamp);
             case "signatureFieldName":
                 return isset($this->_signatureFieldName);
             default:
