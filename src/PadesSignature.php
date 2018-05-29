@@ -40,4 +40,15 @@ class PadesSignature
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "signers":
+                return isset($this->_signers);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

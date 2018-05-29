@@ -63,4 +63,17 @@ class RestPkiException extends RestException
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "errorCode":
+                return isset($this->_errorCode);
+            case "detail":
+                return isset($this->_detail);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

@@ -67,4 +67,19 @@ class DigestAlgorithmAndValue
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "algorithm":
+                return isset($this->_algorithm);
+            case "value":
+                return isset($this->_value);
+            case 'hexValue':
+                return isset($this->_hexValue);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

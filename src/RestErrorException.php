@@ -62,4 +62,17 @@ class RestErrorException extends RestException
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "statusCode":
+                return isset($this->_statusCode);
+            case "errorMessage":
+                return isset($this->_errorMessage);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

@@ -39,4 +39,15 @@ class CadesSignature
                 return null;
         }
     }
+
+    public function __isset($prop)
+    {
+        switch ($prop) {
+            case "signers":
+                return isset($this->_signers);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+                return null;
+        }
+    }
 }

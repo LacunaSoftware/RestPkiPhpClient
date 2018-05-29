@@ -238,4 +238,39 @@ class PkiBrazilCertificateFields
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "certificateType":
+                return isset($this->_certificateType);
+            case "cpf":
+                return isset($this->_cpf);
+            case "cpfFormatted":
+                return isset($this->_cpfFormatted);
+            case "cnpj":
+                return isset($this->_cnpj);
+            case "cnpjFormatted":
+                return isset($this->_cnpjFormatted);
+            case "responsavel":
+                return isset($this->_responsavel);
+            case "dateOfBirth":
+                return isset($this->_dateOfBirth);
+            case "companyName":
+                return isset($this->_companyName);
+            case "rgNumero":
+                return isset($this->_rgNumero);
+            case "rgEmissor":
+                return isset($this->_rgEmissor);
+            case "rgEmissorUF":
+                return isset($this->_rgEmissorUF);
+            case "oabNumero":
+                return isset($this->_oabNumero);
+            case "oabUF":
+                return isset($this->_oabUF);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

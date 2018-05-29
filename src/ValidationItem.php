@@ -90,4 +90,19 @@ class ValidationItem
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "type":
+                return isset($this->_type);
+            case "message":
+                return isset($this->_message);
+            case "detail":
+                return isset($this->_detail);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

@@ -58,4 +58,17 @@ class RestException extends \Exception
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "verb":
+                return isset($this->_verb);
+            case "url":
+                return isset($this->_url);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }

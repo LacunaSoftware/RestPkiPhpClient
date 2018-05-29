@@ -187,8 +187,39 @@ class PKCertificate
                 return $this->getIssuer();
             case "binaryThumbprintSHA256":
                 return $this->getBinaryThumbprintSHA256();
-            case "signatureFieldName":
+            case "thumbprint":
                 return $this->getThumbprint();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "subjectName":
+                return isset($this->_subjectName);
+            case "emailAddress":
+                return isset($this->_emailAddress);
+            case "issuerName":
+                return isset($this->_issuerName);
+            case "serialNumber":
+                return isset($this->_serialNumber);
+            case "validityStart":
+                return isset($this->_validityStart);
+            case "validityEnd":
+                return isset($this->_validityEnd);
+            case "pkiBrazil":
+                return isset($this->_pkiBrazil);
+            case "pkiItaly":
+                return isset($this->_pkiItaly);
+            case "issuer":
+                return isset($this->_issuer);
+            case "binaryThumbprintSHA256":
+                return isset($this->_binaryThumbprintSHA256);
+            case "thumbprint":
+                return isset($this->_thumbprint);
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
                 return null;

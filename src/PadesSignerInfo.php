@@ -53,4 +53,16 @@ class PadesSignerInfo extends CadesSignerInfo
                 return parent::__get($prop);
         }
     }
+
+    public function __isset($prop)
+    {
+        switch ($prop) {
+            case "isDocumentTimestamp":
+                return isset($this->_isDocumentTimestamp);
+            case "signatureFieldName":
+                return isset($this->_signatureFieldName);
+            default:
+                return parent::__isset($prop);
+        }
+    }
 }

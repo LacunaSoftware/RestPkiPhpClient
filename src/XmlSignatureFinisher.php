@@ -26,7 +26,7 @@ class XmlSignatureFinisher extends SignatureFinisher
             throw new \Exception("The token was not set");
         }
 
-        if (empty($this->signature)) {
+        if (empty($this->signatureBase64)) {
             $response = $this->client->post("Api/XmlSignatures/{$this->token}/Finalize", null);
         } else {
             $request['signature'] = $this->signatureBase64;

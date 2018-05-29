@@ -67,4 +67,19 @@ class SignaturePolicyIdentifier
                 return null;
         }
     }
+
+    public function __isset($attr)
+    {
+        switch ($attr) {
+            case "digest":
+                return isset($this->_digest);
+            case "oid":
+                return isset($this->_oid);
+            case "uri":
+                return isset($this->_uri);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
+                return null;
+        }
+    }
 }

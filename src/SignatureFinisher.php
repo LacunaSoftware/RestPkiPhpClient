@@ -117,4 +117,15 @@ abstract class SignatureFinisher
                 return null;
         }
     }
+
+    public function __isset($name)
+    {
+        switch ($name) {
+            case "certificateInfo":
+                return isset($this->certificateInfo);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }
