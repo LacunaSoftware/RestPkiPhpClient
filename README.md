@@ -7,7 +7,7 @@ This library contains classes that encapsulate the calls to the REST PKI API.
 The recommended way to install **Rest PKI Client lib** is through [Composer](http://getcomposer.org):
 
     "require": {
-        "lacuna/restpki-client" : "^2.2.7"
+        "lacuna/restpki-client" : "^2.3.0"
     }
 
 This library depends on the GuzzleHttp package, which in turn requires PHP 5.5 or greater. If you use PHP 5.3 or
