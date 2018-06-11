@@ -10,13 +10,15 @@ namespace Lacuna\RestPki;
  * @property string $defaultSignaturePolicy
  * @property string[] $acceptableExplicitPolicies
  * @property string $securityContext
+ * @property $ignoreRevocationStatusUnknown bool
  */
 abstract class SignatureExplorer
 {
-    public $validate;
+    public $validate = true;
     public $defaultSignaturePolicy;
     public $acceptableExplicitPolicies;
     public $securityContext;
+    public $ignoreRevocationStatusUnknown = false;
 
     /** @var RestPkiClient */
     protected $client;
@@ -30,7 +32,6 @@ abstract class SignatureExplorer
     protected function __construct($client)
     {
         $this->client = $client;
-        $this->validate = true;
     }
 
     #region setSignatureFile
@@ -145,7 +146,8 @@ abstract class SignatureExplorer
             'validate' => $this->validate,
             'defaultSignaturePolicyId' => $this->defaultSignaturePolicy,
             'securityContextId' => $this->securityContext,
-            'acceptableExplicitPolicies' => $this->acceptableExplicitPolicies
+            'acceptableExplicitPolicies' => $this->acceptableExplicitPolicies,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         $request['file'] = $this->signatureFile->uploadOrReference($this->client);
