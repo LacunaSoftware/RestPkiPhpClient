@@ -6,10 +6,13 @@ namespace Lacuna\RestPki;
  * Class Authentication
  * @package Lacuna\RestPki
  *
+ * @property $ignoreRevocationStatusUnknown
  * @property-read $certificate
  */
 class Authentication
 {
+    public $ignoreRevocationStatusUnknown = false;
+
     /** @var RestPkiClient */
     private $client;
 
@@ -32,7 +35,8 @@ class Authentication
     public function startWithWebPki($securityContextId)
     {
         $request = array(
-            'securityContextId' => $securityContextId
+            'securityContextId' => $securityContextId,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         $response = $this->client->post('Api/Authentications', $request);

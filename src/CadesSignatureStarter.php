@@ -224,7 +224,8 @@ class CadesSignatureStarter extends SignatureStarter
             'signaturePolicyId' => $this->signaturePolicy,
             'securityContextId' => $this->securityContext,
             'callbackArgument' => $this->callbackArgument,
-            'encapsulateContent' => $this->encapsulateContent
+            'encapsulateContent' => $this->encapsulateContent,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         if (isset($this->fileToSign)) {
@@ -244,7 +245,8 @@ class CadesSignatureStarter extends SignatureStarter
             'signaturePolicyId' => $this->signaturePolicy,
             'securityContextId' => $this->securityContext,
             'callbackArgument' => $this->callbackArgument,
-            'encapsulateContent' => $this->encapsulateContent
+            'encapsulateContent' => $this->encapsulateContent,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         if (isset($this->fileToSign)) {
@@ -269,7 +271,8 @@ class CadesSignatureStarter extends SignatureStarter
             'signaturePolicyId' => $this->signaturePolicy,
             'securityContextId' => $this->securityContext,
             'callbackArgument' => $this->callbackArgument,
-            'encapsulateContent' => $this->encapsulateContent
+            'encapsulateContent' => $this->encapsulateContent,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         if (isset($this->fileToSign)) {

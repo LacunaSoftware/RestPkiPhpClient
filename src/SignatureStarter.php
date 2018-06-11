@@ -9,13 +9,15 @@ namespace Lacuna\RestPki;
  * @property $signaturePolicy string
  * @property $securityContext string
  * @property $callbackArgument string
+ * @property $ignoreRevocationStatusUnknown bool
  * @property-read $certificateInfo
- */
+*/
 abstract class SignatureStarter
 {
     public $signaturePolicy;
     public $securityContext;
     public $callbackArgument;
+    public $ignoreRevocationStatusUnknown = false;
 
     /** @var RestPkiClient */
     protected $client;

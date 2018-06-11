@@ -171,6 +171,7 @@ class PadesSignatureStarter extends SignatureStarter
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
             'visualRepresentation' => $this->visualRepresentation,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         $request['pdfToSign'] = $this->pdfToSign->getContentBase64();
@@ -189,7 +190,8 @@ class PadesSignatureStarter extends SignatureStarter
             'bypassMarksIfSigned' => $this->bypassMarksIfSigned,
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
-            'visualRepresentation' => $this->visualRepresentation
+            'visualRepresentation' => $this->visualRepresentation,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
         $request['pdfToSign'] = $this->pdfToSign->uploadOrReference($this->client);

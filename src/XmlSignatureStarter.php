@@ -114,7 +114,8 @@ abstract class XmlSignatureStarter extends SignatureStarter
             'certificate' => $this->signerCertificateBase64,
             'signaturePolicyId' => $this->signaturePolicy,
             'securityContextId' => $this->securityContext,
-            'signatureElementId' => $this->signatureElementId
+            'signatureElementId' => $this->signatureElementId,
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
         if (isset($this->xmlToSign)) {
             $request['xml'] = $this->xmlToSign->getContentBase64();
