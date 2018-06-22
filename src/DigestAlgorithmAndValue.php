@@ -6,9 +6,9 @@ namespace Lacuna\RestPki;
  * Class DigestAlgorithmAndValue
  * @package Lacuna\RestPki
  *
- * @property-read $algorithm DigestAlgorithm
- * @property-read $value binary
- * @property-read $hexValue string
+ * @property-read DigestAlgorithm $algorithm
+ * @property-read binary $value
+ * @property-read string $hexValue
  */
 class DigestAlgorithmAndValue
 {

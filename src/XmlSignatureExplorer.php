@@ -28,7 +28,7 @@ class XmlSignatureExplorer extends SignatureExplorer
     public function open()
     {
         $request = parent::getRequest();
-        $request['idResolutionTable'] = $this->idResolutionTable == null ? null : $this->idResolutionTable;
+        $request['idResolutionTable'] = $this->idResolutionTable;
 
         $response = $this->client->post("Api/XmlSignatures/Open", $request);
 

@@ -11,7 +11,7 @@ namespace Lacuna\RestPki;
 class PdfMarkTextElement extends PdfMarkElement
 {
     public $textSections;
-    public $align;
+    public $align = 'Left';
 
     /**
      * @param mixed|null $relativeContainer
@@ -25,6 +25,5 @@ class PdfMarkTextElement extends PdfMarkElement
         } else {
             $this->textSections = $textSections;
         }
-        $this->align = 'Left';
     }
 }

@@ -14,7 +14,7 @@ abstract class SignatureFinisher2
 {
     public $token;
     public $signatureBase64;
-    public $forceBlobResult;
+    public $forceBlobResult = false;
 
     /** @var RestPkiClient */
     protected $client;
@@ -25,7 +25,6 @@ abstract class SignatureFinisher2
     public function __construct($client)
     {
         $this->client = $client;
-        $this->forceBlobResult = false;
     }
 
     /**
