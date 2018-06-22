@@ -13,7 +13,7 @@ namespace Lacuna\RestPki;
  */
 class PdfTextSection
 {
-    public $style;
+    public $style = PdfTextStyle::NORMAL;
     public $text;
     public $color;
     public $fontSize;
@@ -25,7 +25,6 @@ class PdfTextSection
      */
     public function __construct($text = null, $color = null, $fontSize = null)
     {
-        $this->style = PdfTextStyle::NORMAL;
         $this->text = $text;
         $this->fontSize = $fontSize;
         if (empty($color)) {

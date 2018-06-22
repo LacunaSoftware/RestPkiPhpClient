@@ -67,8 +67,8 @@ class PkiBrazilCertificateFields
             if (!preg_match("/^\d{14}$/", $model->cnpj)) {
                 $this->_cnpjFormatted = $model->cnpj;
             } else {
-                $this->_cnpjFormatted = sprintf("%s.%s.%s/%s-%s", substr($model->cpf, 0, 2), substr($model->cpf, 2, 3),
-                    substr($model->cpf, 5, 3), substr($model->cpf, 8, 4), substr($model->cpf, 12));
+                $this->_cnpjFormatted = sprintf("%s.%s.%s/%s-%s", substr($model->cnpj, 0, 2), substr($model->cnpj, 2, 3),
+                    substr($model->cnpj, 5, 3), substr($model->cnpj, 8, 4), substr($model->cnpj, 12));
             }
         }
 

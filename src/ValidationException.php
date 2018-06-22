@@ -37,7 +37,7 @@ class ValidationException extends RestException
     {
         switch ($name) {
             case "validationResults":
-                return $this->_validationResults;
+                return $this->getValidationResults();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
                 return null;

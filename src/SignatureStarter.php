@@ -22,7 +22,7 @@ abstract class SignatureStarter
     /** @var RestPkiClient */
     protected $client;
     protected $signerCertificateBase64;
-    protected $done;
+    protected $done = false;
     protected $_certificateInfo;
 
     private static function getOpenSslSignatureAlgorithm($oid)

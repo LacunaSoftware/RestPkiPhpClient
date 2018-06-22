@@ -61,7 +61,8 @@ class FileReference
         $model = $result->_getModel();
         if (isset($model->blobToken)) {
             $obj->blobToken = $model->blobToken;
-        } else {
+        }
+        if (isset($model->content)) {
             $obj->content = $model->content;
         }
         return $obj;

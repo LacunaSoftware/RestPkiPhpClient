@@ -8,18 +8,18 @@ namespace Lacuna\RestPki;
  *
  * @property $measurementUnits string
  * @property $pageOptimization string
- * @property $bypassMarksIfSigned bool|null
+ * @property $bypassMarksIfSigned bool
  * @property $visualRepresentation
  * @property $pdfMarks
  */
 class PadesSignatureStarter extends SignatureStarter
 {
 
-    public $measurementUnits;
+    public $measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     public $pageOptimization;
-    public $bypassMarksIfSigned;
+    public $bypassMarksIfSigned = true;
     public $visualRepresentation;
-    public $pdfMarks;
+    public $pdfMarks = [];
 
     /** @var FileReference */
     private $pdfToSign;
@@ -30,10 +30,6 @@ class PadesSignatureStarter extends SignatureStarter
     public function __construct($client)
     {
         parent::__construct($client);
-        $this->bypassMarksIfSigned = true;
-        $this->done = false;
-        $this->pdfMarks = [];
-        $this->measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     }
 
     #region setPdfToSign
@@ -97,6 +93,8 @@ class PadesSignatureStarter extends SignatureStarter
     #endregion
 
     /**
+     * @deprecated Use "encapsulatedContent" property.
+     *
      * Alias of setting the property `visualRepresentation`
      *
      * @param $visualRepresentation

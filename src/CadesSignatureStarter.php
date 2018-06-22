@@ -6,12 +6,12 @@ namespace Lacuna\RestPki;
  * Class CadesSignatureStarter
  * @package Lacuna\RestPki
  *
- * @property bool|null $encapsulateContent
+ * @property bool $encapsulateContent
  * @property DigestAlgorithm[] $digestAlgorithmsForDetachedSignature
  */
 class CadesSignatureStarter extends SignatureStarter
 {
-    public $encapsulateContent;
+    public $encapsulateContent = true;
 
     public $digestAlgorithmsForDetachedSignature;
 
@@ -159,6 +159,8 @@ class CadesSignatureStarter extends SignatureStarter
     #endregion
 
     /**
+     * @deprecated Use "encapsulatedContent" property.
+     *
      * Alias of setting the property encapsulateContent
      *
      * @param $encapsulateContent

@@ -15,10 +15,10 @@ namespace Lacuna\RestPki;
 class PdfMarker
 {
 
-    public $measurementUnits;
+    public $measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     public $pageOptimization;
     public $abortIfSigned;
-    public $marks;
+    public $marks = [];
     public $forceBlobResult;
 
     /** @var  RestPkiClient */
@@ -33,8 +33,6 @@ class PdfMarker
     public function __construct($client)
     {
         $this->client = $client;
-        $this->marks = [];
-        $this->measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     }
 
     /**

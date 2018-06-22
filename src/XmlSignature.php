@@ -35,7 +35,9 @@ class XmlSignature
         if (isset($model->signaturePolicy)) {
             $this->_signaturePolicy = new SignaturePolicyIdentifier($model->signaturePolicy);
         }
-        $this->_certificate = new PKCertificate($model->certificate);
+        if (isset($model->certificate)) {
+            $this->_certificate = new PKCertificate($model->certificate);
+        }
         $this->_signingTime = $model->signingTime;
         $this->_certifiedDateReference = $model->certifiedDateReference;
         if (isset($model->timestamps)) {
