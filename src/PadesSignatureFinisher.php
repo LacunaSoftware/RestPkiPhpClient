@@ -51,7 +51,7 @@ class PadesSignatureFinisher extends SignatureFinisher
     public function getSignedPdf()
     {
         if (!$this->done) {
-            throw new \LogicException("The getSignedPdf() method can only be called after calling the finish() method");
+            throw new \LogicException("The method getSignedPdf() method can only be called after calling the finish() method");
         }
 
         return $this->signedPdf;

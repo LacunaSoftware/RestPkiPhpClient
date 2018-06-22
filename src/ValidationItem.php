@@ -80,11 +80,11 @@ class ValidationItem
     {
         switch ($name) {
             case "type":
-                return $this->_type;
+                return $this->getType();
             case "message":
-                return $this->_message;
+                return $this->getMessage();
             case "detail":
-                return $this->_detail;
+                return $this->getDetail();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
                 return null;

@@ -164,6 +164,8 @@ class DigestAlgorithm
                 return $this->getPhpId();
             case "name":
                 return $this->getName();
+            case "hashId":
+                return $this->getHashId();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
                 return null;

@@ -111,4 +111,17 @@ class SignatureAlgorithm
                 throw new \RuntimeException(); // should not happen
         }
     }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case "id":
+                return $this->getAlgorithm();
+            case "name":
+                return $this->getName();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $name);
+                return null;
+        }
+    }
 }
