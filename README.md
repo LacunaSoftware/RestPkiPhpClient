@@ -16,7 +16,7 @@ This library depends on the GuzzleHttp package, which in turn requires PHP 5.5 o
 Samples
 -------
 
-Please visit the [REST PKI samples repository](https://github.com/LacunaSoftware/RestPkiSamples/tree/master/PHP)
+Please visit the [PKI Suite samples repository](https://github.com/LacunaSoftware/PkiSuiteSamples/tree/master/php)
 for examples on how to use this library.
 
 Upgrade from 1.x
