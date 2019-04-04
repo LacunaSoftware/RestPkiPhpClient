@@ -42,7 +42,7 @@ class RestPkiClient
         $this->accessToken = $accessToken;
         $this->usePhpCAInfo = $usePhpCAInfo;
 
-        if (!isset($caInfoPath)) {
+        if (isset($caInfoPath)) {
             $this->caInfoPath = __DIR__ . '/../resources/cacert.pem';
         }
     }
