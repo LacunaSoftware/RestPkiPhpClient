@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestPkiClient
 {
-    const LIB_VERSION = '2.3.2';
+    const LIB_VERSION = '2.3.3';
 
     public $multipartUploadThreshold = 5242880; // 5 MB
     public $restPkiVersion;
@@ -43,7 +43,7 @@ class RestPkiClient
         $this->usePhpCAInfo = $usePhpCAInfo;
 
         if (!isset($caInfoPath)) {
-            $caInfoPath = __DIR__ . '/../resources/cacert.pem';
+            $caInfoPath = __DIR__ . '/../resources/ca-bundle.pem';
         }
         $this->caInfoPath = $caInfoPath;
     }
