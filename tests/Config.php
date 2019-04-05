@@ -5,7 +5,7 @@ namespace Lacuna\RestPki\Tests;
 class Config
 {
     // Path to a file that is larger than the upload threshold (5MB)
-    const TEST_PDF_PATH = 'V:\\KnowledgeBase\\Books\\Angular\\angularjs.pdf';
+    const TEST_PDF_PATH = '';
 
     const ENDPOINT = 'http://pki.rest/';
     const LACUNA_TEST_SECURITY_CONTEXT = '803517ad-3bbc-4169-b085-60053a8f6dbf';

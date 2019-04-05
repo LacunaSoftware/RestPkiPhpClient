@@ -15,10 +15,12 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestPkiClient
 {
-    const LIB_VERSION = '2.3.1';
+    const LIB_VERSION = '2.3.2';
 
     public $multipartUploadThreshold = 5242880; // 5 MB
     public $restPkiVersion;
+    public $usePhpCAInfo;
+    public $caInfoPath;
 
     /**
      * @internal
@@ -30,10 +32,20 @@ class RestPkiClient
     private $accessToken;
     private static $endpointVersions = array();
 
-    public function __construct($endpointUrl, $accessToken)
-    {
+    public function __construct(
+        $endpointUrl,
+        $accessToken,
+        $usePhpCAInfo = false,
+        $caInfoPath = null
+    ) {
         $this->endpointUrl = $endpointUrl;
         $this->accessToken = $accessToken;
+        $this->usePhpCAInfo = $usePhpCAInfo;
+
+        if (!isset($caInfoPath)) {
+            $caInfoPath = __DIR__ . '/../resources/cacert.pem';
+        }
+        $this->caInfoPath = $caInfoPath;
     }
 
     public function getRestClient()
@@ -45,12 +57,24 @@ class RestPkiClient
         if (!empty($this->accessToken)) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         }
-        $client = new Client([
+
+        $verify = true;
+        if (!$this->usePhpCAInfo) {
+            if (!isset($this->caInfoPath)) {
+                throw new \UnexpectedValueException('No CA certificates path was provided. Set the "usePhpCAInfo" variable to true if you want to use the default value that your PHP uses.');
+            }
+            if (!file_exists($this->caInfoPath)) {
+                throw new \InvalidArgumentException("The provided cacert file does not exist: {$this->caInfoPath}.");
+            }
+            $verify = $this->caInfoPath;
+        }
+
+        return new Client([
             'base_uri' => $this->endpointUrl,
             'headers' => $headers,
-            'http_errors' => false
+            'http_errors' => false,
+            'verify' => $verify
         ]);
-        return $client;
     }
 
     /**
@@ -145,10 +169,12 @@ class RestPkiClient
                         $vr = new ValidationResults($response->validationResults);
                         $ex = new ValidationException($verb, $url, $vr);
                     } else {
-                        $ex = new RestPkiException($verb, $url, $response->code, $response->detail);
+                        $ex = new RestPkiException($verb, $url, $response->code,
+                            $response->detail);
                     }
                 } else {
-                    $ex = new RestErrorException($verb, $url, $statusCode, $response->message);
+                    $ex = new RestErrorException($verb, $url, $statusCode,
+                        $response->message);
                 }
             } catch (\Exception $e) {
                 $ex = new RestErrorException($verb, $url, $statusCode);
@@ -244,7 +270,8 @@ class RestPkiClient
 
             $buffer = fread($handle, $partSize);
 
-            $partETag = $this->postRaw("Api/MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
+            $partETag = $this->postRaw("Api/MultipartUploads/{$blobToken}/{$partNumber}",
+                $buffer);
             array_push($partETags, $partETag);
 
             $partNumber += 1;
@@ -283,7 +310,8 @@ class RestPkiClient
             $partLen = (int)min($len - $offset, $partSize);
             $buffer = substr($content, $offset, $partLen);
 
-            $partETag = $this->postRaw("MultipartUploads/{$blobToken}/{$partNumber}", $buffer);
+            $partETag = $this->postRaw("MultipartUploads/{$blobToken}/{$partNumber}",
+                $buffer);
             array_push($partETags, $partETag);
 
             $partNumber += 1;
