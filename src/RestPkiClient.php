@@ -295,7 +295,7 @@ class RestPkiClient
 
         // Begin the upload
 
-        $beginResponse = $this->post('MultipartUploads', null);
+        $beginResponse = $this->post('Api/MultipartUploads', null);
         $blobToken = $beginResponse->blobToken;
         $partSize = $beginResponse->partSize;
 
@@ -310,7 +310,7 @@ class RestPkiClient
             $partLen = (int)min($len - $offset, $partSize);
             $buffer = substr($content, $offset, $partLen);
 
-            $partETag = $this->postRaw("MultipartUploads/{$blobToken}/{$partNumber}",
+            $partETag = $this->postRaw("Api/MultipartUploads/{$blobToken}/{$partNumber}",
                 $buffer);
             array_push($partETags, $partETag);
 
@@ -321,7 +321,7 @@ class RestPkiClient
         $endRequest = array(
             'partETags' => $partETags
         );
-        $this->post("MultipartUploads/{$blobToken}", $endRequest);
+        $this->post("Api/MultipartUploads/{$blobToken}", $endRequest);
 
         $this->_uploadCount += 1;
 
