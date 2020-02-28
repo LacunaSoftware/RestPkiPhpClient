@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestPkiClient
 {
-    const LIB_VERSION = '2.3.4';
+    const LIB_VERSION = '2.4.0';
 
     public $multipartUploadThreshold = 5242880; // 5 MB
     public $restPkiVersion;
