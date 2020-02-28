@@ -11,6 +11,7 @@ namespace Lacuna\RestPki;
  * @property string[] $acceptableExplicitPolicies
  * @property string $securityContext
  * @property $ignoreRevocationStatusUnknown bool
+ * @property $trustUncertifiedSigningTime bool
  */
 abstract class SignatureExplorer
 {
@@ -19,6 +20,7 @@ abstract class SignatureExplorer
     public $acceptableExplicitPolicies;
     public $securityContext;
     public $ignoreRevocationStatusUnknown = false;
+    public $trustUncertifiedSigningTime = false;
 
     /** @var RestPkiClient */
     protected $client;
@@ -147,7 +149,8 @@ abstract class SignatureExplorer
             'defaultSignaturePolicyId' => $this->defaultSignaturePolicy,
             'securityContextId' => $this->securityContext,
             'acceptableExplicitPolicies' => $this->acceptableExplicitPolicies,
-            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown,
+            'trustUncertifiedSigningTime' => $this->trustUncertifiedSigningTime,
         );
 
         $request['file'] = $this->signatureFile->uploadOrReference($this->client);
