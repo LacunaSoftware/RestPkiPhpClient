@@ -11,6 +11,7 @@ namespace Lacuna\RestPki;
  * @property bool $abortIfSigned
  * @property array $marks
  * @property bool $forceBlobResult
+ * @property bool $preserveSignaturesVisualRepresentation
  */
 class PdfMarker
 {
@@ -20,6 +21,7 @@ class PdfMarker
     public $abortIfSigned;
     public $marks = [];
     public $forceBlobResult;
+    public $preserveSignaturesVisualRepresentation;
 
     /** @var  RestPkiClient */
     private $client;
@@ -97,8 +99,13 @@ class PdfMarker
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
             'forceBlobResult' => $this->forceBlobResult,
-            'abortIfSigned' => $this->abortIfSigned
+            'abortIfSigned' => $this->abortIfSigned,
         );
+
+        if (isset($this->preserveSignaturesVisualRepresentation)) {
+            $request['preserveSignaturesVisualRepresentation'] = $this->preserveSignaturesVisualRepresentation;
+        }
+
         $request['file'] = $this->file->uploadOrReference($this->client);
         $response = $this->client->post('Api/Pdf/AddMarks', $request);
         return new FileResult($this->client, $response->file);
