@@ -11,6 +11,7 @@ namespace Lacuna\RestPki;
  * @property $bypassMarksIfSigned bool
  * @property $visualRepresentation
  * @property $pdfMarks
+ * @property $customSignatureFieldName string
  */
 class PadesSignatureStarter extends SignatureStarter
 {
@@ -20,6 +21,7 @@ class PadesSignatureStarter extends SignatureStarter
     public $bypassMarksIfSigned = true;
     public $visualRepresentation;
     public $pdfMarks = [];
+    public $customSignatureFieldName;
 
     /** @var FileReference */
     private $pdfToSign;
@@ -169,7 +171,8 @@ class PadesSignatureStarter extends SignatureStarter
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
             'visualRepresentation' => $this->visualRepresentation,
-            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown,
+            'customSignatureFieldName' => $this->customSignatureFieldName,
         );
 
         $request['pdfToSign'] = $this->pdfToSign->getContentBase64();
@@ -189,7 +192,8 @@ class PadesSignatureStarter extends SignatureStarter
             'measurementUnits' => $this->measurementUnits,
             'pageOptimization' => $this->pageOptimization,
             'visualRepresentation' => $this->visualRepresentation,
-            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
+            'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown,
+            'customSignatureFieldName' => $this->customSignatureFieldName,
         );
 
         $request['pdfToSign'] = $this->pdfToSign->uploadOrReference($this->client);
