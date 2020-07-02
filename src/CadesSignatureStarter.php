@@ -21,6 +21,9 @@ class CadesSignatureStarter extends SignatureStarter
     /** @var FileReference */
     private $cmsToCoSign;
 
+    /** @var array */
+    private $dataHashes;
+
     /**
      * @param $client RestPkiClient
      */
@@ -28,6 +31,16 @@ class CadesSignatureStarter extends SignatureStarter
     {
         parent::__construct($client);
         $this->digestAlgorithmsForDetachedSignature = array(DigestAlgorithm::getSHA1(), DigestAlgorithm::getSHA256());
+    }
+
+    /**
+     * Sets the data hash to be signed
+     *
+     * @param $dataHashes array The data hash of the file to be signed
+     */
+    public function setDataHashesToSign($dataHashes)
+    {
+        $this->dataHashes = $dataHashes;
     }
 
     #region setFileToSign
@@ -253,7 +266,11 @@ class CadesSignatureStarter extends SignatureStarter
 
         if (isset($this->fileToSign)) {
             if ($this->encapsulateContent === false) {
-                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+                if (isset($this->dataHashes)) {
+                    $request['dataHashes'] = $this->dataHashes;
+                } else {
+                    $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+                }
             } else {
                 $request['contentToSign'] = $this->fileToSign->getContentBase64();
             }
