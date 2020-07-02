@@ -53,6 +53,14 @@ class DigestAlgorithmAndValue
         return $this->_hexValue;
     }
 
+    public static function getInstance($algorithm, $value){
+        $model = array(
+            'algorithm' => $algorithm,
+            'value' => $value
+        );
+        return __construct($model);
+    }
+
     public function __get($attr)
     {
         switch ($attr) {

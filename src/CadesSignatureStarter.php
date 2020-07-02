@@ -264,13 +264,11 @@ class CadesSignatureStarter extends SignatureStarter
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
-        if (isset($this->fileToSign)) {
+        if(isset($this->dataHashes) && $this->encapsulateContent === false){
+            $request['dataHashes'] = $this->dataHashes;
+        } else if (isset($this->fileToSign)) {
             if ($this->encapsulateContent === false) {
-                if (isset($this->dataHashes)) {
-                    $request['dataHashes'] = $this->dataHashes;
-                } else {
-                    $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
-                }
+                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
             } else {
                 $request['contentToSign'] = $this->fileToSign->getContentBase64();
             }
@@ -294,18 +292,20 @@ class CadesSignatureStarter extends SignatureStarter
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
-        if (isset($this->fileToSign)) {
+        if(isset($this->dataHashes) && $this->encapsulateContent === false){
+            $request['dataHashes'] = $this->dataHashes;
+        } else if (isset($this->fileToSign)) {
             if ($this->encapsulateContent === false) {
                 $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
             } else {
-                $request['fileToSign'] = $this->fileToSign->uploadOrReference($this->client);
+                $request['contentToSign'] = $this->fileToSign->getContentBase64();
             }
         }
 
         if (isset($this->cmsToCoSign)) {
             $request['cmsToCoSign'] = $this->cmsToCoSign->uploadOrReference($this->client);
         }
-
+        var_dump($this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature));
         return $this->client->post('Api/v3/CadesSignatures', $request);
     }
 }
