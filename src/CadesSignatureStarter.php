@@ -213,9 +213,16 @@ class CadesSignatureStarter extends SignatureStarter
 
     private function startCommon()
     {
-        if (empty($this->fileToSign) && empty($this->cmsToCoSign)) {
-            throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+        if ($this->encapsulateContent){
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign)) { 
+                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+            }
+        } else {
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign) && empty($this->dataHashes)) {
+                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+            }
         }
+
         if (empty($this->signaturePolicy)) {
             throw new \Exception("The signature policy was not set");
         }
@@ -264,12 +271,16 @@ class CadesSignatureStarter extends SignatureStarter
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
-        if(isset($this->dataHashes) && $this->encapsulateContent === false){
-            $request['dataHashes'] = $this->dataHashes;
-        } else if (isset($this->fileToSign)) {
-            if ($this->encapsulateContent === false) {
-                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+        if (!$this->encapsulateContent) {
+
+            if(isset($this->dataHashes)){
+                $request['dataHashes'] = $this->dataHashes;
             } else {
+                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+            }
+
+        } else {
+            if (isset($this->fileToSign)) {
                 $request['contentToSign'] = $this->fileToSign->getContentBase64();
             }
         }
@@ -292,20 +303,23 @@ class CadesSignatureStarter extends SignatureStarter
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown
         );
 
-        if(isset($this->dataHashes) && $this->encapsulateContent === false){
-            $request['dataHashes'] = $this->dataHashes;
-        } else if (isset($this->fileToSign)) {
-            if ($this->encapsulateContent === false) {
-                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+        if (!$this->encapsulateContent) {
+
+            if(isset($this->dataHashes)){
+                $request['dataHashes'] = $this->dataHashes;
             } else {
-                $request['contentToSign'] = $this->fileToSign->getContentBase64();
+                $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
+            }
+
+        } else {
+            if (isset($this->fileToSign)) {
+                $request['fileToSign'] = $this->fileToSign->uploadOrReference($this->client);
             }
         }
 
         if (isset($this->cmsToCoSign)) {
             $request['cmsToCoSign'] = $this->cmsToCoSign->uploadOrReference($this->client);
         }
-        var_dump($this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature));
         return $this->client->post('Api/v3/CadesSignatures', $request);
     }
 }
