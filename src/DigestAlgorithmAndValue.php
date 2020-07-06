@@ -18,7 +18,12 @@ class DigestAlgorithmAndValue
 
     public function __construct($model)
     {
-        $this->_algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($model->algorithm);
+        if (isset($model->algorithm)) {
+            $this->_algorithm = DigestAlgorithm::getInstanceByApiAlgorithm($model->algorithm);
+        } else if (isset($model->algorithmObj)) {
+            $this->_algorithm = $model->algorithmObj;
+        }
+
         $this->_value = base64_decode($model->value);
         $this->_hexValue = bin2hex($this->_value);
     }
@@ -53,6 +58,21 @@ class DigestAlgorithmAndValue
         return $this->_hexValue;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @param $algorithmObj DigestAlgorithm algorithm object.
+     * @param $value binary digest value.
+     * @return DigestAlgorithmAndValue
+     */
+    public function getInstance($algorithmObj, $value){
+        $model = array(
+            'algorithmObj' => $algorithmObj,
+            'value' => $value
+        );
+        return new DigestAlgorithmAndValue((object)$model);
+    }
+
     public function __get($attr)
     {
         switch ($attr) {
@@ -81,5 +101,13 @@ class DigestAlgorithmAndValue
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $attr);
                 return null;
         }
+    }
+
+    public function toModel ()
+    {
+        return array(
+            'algorithm' => $this->_algorithm->id,
+            'hexValue' => $this->_hexValue
+        );
     }
 }
