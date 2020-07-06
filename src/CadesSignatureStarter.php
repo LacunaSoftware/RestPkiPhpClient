@@ -213,16 +213,6 @@ class CadesSignatureStarter extends SignatureStarter
 
     private function startCommon()
     {
-        if ($this->encapsulateContent){
-            if (empty($this->fileToSign) && empty($this->cmsToCoSign)) { 
-                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
-            }
-        } else {
-            if (empty($this->fileToSign) && empty($this->cmsToCoSign) && empty($this->dataHashes)) {
-                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
-            }
-        }
-
         if (empty($this->signaturePolicy)) {
             throw new \Exception("The signature policy was not set");
         }
@@ -240,6 +230,9 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     private function startCommonV1() {
+        if (empty($this->fileToSign) && empty($this->cmsToCoSign)) {
+            throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+        }
 
         $request = array(
             'certificate' => $this->signerCertificateBase64,
@@ -261,6 +254,15 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     private function startCommonV2() {
+        if ($this->encapsulateContent){
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign)) { 
+                throw new \Exception("The encapsulated content to sign was not set and no CMS to be co-signed was given");
+            }
+        } else {
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign) && empty($this->dataHashes)) {
+                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+            }
+        }
 
         $request = array(
             'certificate' => $this->signerCertificateBase64,
@@ -274,7 +276,11 @@ class CadesSignatureStarter extends SignatureStarter
         if (!$this->encapsulateContent) {
 
             if(isset($this->dataHashes)){
-                $request['dataHashes'] = $this->dataHashes;
+                $dataHashes = array();
+                foreach ($this->dataHashes as $dataHash) {
+                    array_push($dataHashes, $dataHash->toModel());
+                }
+                $request['dataHashes'] = $dataHashes;
             } else {
                 $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
             }
@@ -293,6 +299,15 @@ class CadesSignatureStarter extends SignatureStarter
     }
 
     private function startCommonV3() {
+        if ($this->encapsulateContent){
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign)) { 
+                throw new \Exception("The encapsulated content to sign was not set and no CMS to be co-signed was given");
+            }
+        } else {
+            if (empty($this->fileToSign) && empty($this->cmsToCoSign) && empty($this->dataHashes)) {
+                throw new \Exception("The content to sign was not set and no CMS to be co-signed was given");
+            }
+        }
 
         $request = array(
             'certificate' => $this->signerCertificateBase64,
@@ -306,7 +321,11 @@ class CadesSignatureStarter extends SignatureStarter
         if (!$this->encapsulateContent) {
 
             if(isset($this->dataHashes)){
-                $request['dataHashes'] = $this->dataHashes;
+                $dataHashes = array();
+                foreach ($this->dataHashes as $dataHash) {
+                    array_push($dataHashes, $dataHash->toModel());
+                }
+                $request['dataHashes'] = $dataHashes;
             } else {
                 $request['dataHashes'] = $this->fileToSign->computeDataHashes($this->digestAlgorithmsForDetachedSignature);
             }
