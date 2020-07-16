@@ -12,6 +12,7 @@ namespace Lacuna\RestPki;
  * @property $visualRepresentation
  * @property $pdfMarks
  * @property $customSignatureFieldName string
+ * @property $certificationLevel
  */
 class PadesSignatureStarter extends SignatureStarter
 {
@@ -22,6 +23,7 @@ class PadesSignatureStarter extends SignatureStarter
     public $visualRepresentation;
     public $pdfMarks = [];
     public $customSignatureFieldName;
+    public $certificationLevel;
 
     /** @var FileReference */
     private $pdfToSign;
@@ -173,6 +175,7 @@ class PadesSignatureStarter extends SignatureStarter
             'visualRepresentation' => $this->visualRepresentation,
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown,
             'customSignatureFieldName' => $this->customSignatureFieldName,
+            'certificationLevel' => $this->certificationLevel,
         );
 
         $request['pdfToSign'] = $this->pdfToSign->getContentBase64();
@@ -194,6 +197,7 @@ class PadesSignatureStarter extends SignatureStarter
             'visualRepresentation' => $this->visualRepresentation,
             'ignoreRevocationStatusUnknown' => $this->ignoreRevocationStatusUnknown,
             'customSignatureFieldName' => $this->customSignatureFieldName,
+            'certificationLevel' => $this->certificationLevel,
         );
 
         $request['pdfToSign'] = $this->pdfToSign->uploadOrReference($this->client);
