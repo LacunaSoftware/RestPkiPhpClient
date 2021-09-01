@@ -27,6 +27,8 @@ class StandardSignaturePolicies
     const XML_ICPBR_NFE_PADRAO_NACIONAL = 'a3c24251-d43a-4ba4-b25d-ee8e2ab24f06';
     const XML_ICPBR_ADR_BASICA = '1cf5db62-58b6-40ba-88a3-d41bada9b621';
     const XML_ICPBR_ADR_TEMPO = '5aa2e0af-5269-43b0-8d45-f4ef52921f04';
+    const XML_ICPBR_ADR_ARQUIVAMENTO = '5b8c0710-006d-434d-bf35-12292b56b90a';
+    const XML_ICPBR_ADR_COMPLETA = '826b3a00-3400-4236-90d9-40917b0cc83b';
     const XML_COD_SHA1 = 'bf71e0fc-6ffd-4135-a137-0e488a3ad39e';
     const XML_COD_SHA256 = '45d83a40-1d59-480a-8cd2-d3df1060cce3';
 }
