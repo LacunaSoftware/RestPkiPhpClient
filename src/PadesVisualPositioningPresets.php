@@ -18,6 +18,8 @@ class PadesVisualPositioningPresets
      */
     public static function getFootnote($client, $pageNumber = null, $rows = null)
     {
+        // casting to int so the value isn't interpreted as false (bool) when it's 0
+        $pageNumber = (int) $pageNumber; 
         $urlSegment = 'Footnote';
         if (!empty($pageNumber)) {
             $urlSegment .= "?pageNumber=" . $pageNumber;
