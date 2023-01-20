@@ -21,7 +21,7 @@ class PadesVisualPositioningPresets
         // casting to int so the value isn't interpreted as false (bool) when it's 0
         $pageNumber = (int) $pageNumber; 
         $urlSegment = 'Footnote';
-        if (!empty($pageNumber)) {
+        if (!empty($pageNumber) || $pageNumber == 0) {
             $urlSegment .= "?pageNumber=" . $pageNumber;
         }
         if (!empty($rows)) {
