@@ -18,10 +18,10 @@ class PdfMarker
 
     public $measurementUnits = PadesMeasurementUnits::CENTIMETERS;
     public $pageOptimization;
-    public $abortIfSigned;
+    public $abortIfSigned = false;
     public $marks = [];
-    public $forceBlobResult;
-    public $preserveSignaturesVisualRepresentation;
+    public $forceBlobResult = false;
+    public $preserveSignaturesVisualRepresentation = false;
 
     /** @var  RestPkiClient */
     private $client;
@@ -35,6 +35,9 @@ class PdfMarker
     public function __construct($client)
     {
         $this->client = $client;
+        $this->forceBlobResult = false;
+        $this->abortIfSigned = false;
+        $this->preserveSignaturesVisualRepresentation = false;
     }
 
     /**
