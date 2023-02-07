@@ -25,7 +25,8 @@ class PadesVisualPositioningPresets
             $urlSegment .= "?pageNumber=" . $pageNumber;
         }
         if (!empty($rows)) {
-            $urlSegment .= "?rows=" . $rows;
+            $urlSegment .= (!empty($pageNumber) || $pageNumber == 0 ) ? "&" : "?";
+            $urlSegment .= "rows=" . $rows;
         }
         return self::getPreset($client, $urlSegment);
     }
