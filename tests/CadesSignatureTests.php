@@ -31,14 +31,14 @@ class CadesSignatureTests extends BaseTest
         $signatureStarter->signaturePolicy = StandardSignaturePolicies::CADES_ICPBR_ADR_BASICA;
         $signatureStarter->securityContext = Config::LACUNA_TEST_SECURITY_CONTEXT;
         $signatureStarter->setFileToSignFromPath(Config::TEST_PDF_PATH);
-        $signatureFinisher = new CadesSignatureFinisher($client);
+        $signatureFinisher = new CadesSignatureFinisher2($client);
 
-        $cmsBytes = $this->performSignature($signatureStarter, $signatureFinisher, $simulateWebPki);
-        $signerCert = $signatureFinisher->getCertificateInfo();
+        $signatureResult = $this->performSignature($signatureStarter, $signatureFinisher, $simulateWebPki);
+        $file = $signatureResult->getContentRaw();
 
         // Save signature in temp file
 
-        $path = $this->saveInTempFile($cmsBytes);
+        $path = $this->saveInTempFile($file);
 
         // Validate signature
 
@@ -111,7 +111,7 @@ class CadesSignatureTests extends BaseTest
         $firstSignatureFinisher->forceBlobResult = true;
 
         $firstResult = $this->performSignature2($firstSignatureStarter, $firstSignatureFinisher, $simulateWebPki);
-
+        
         // Check that upload was used
 
         $this->assertTrue($client->_uploadCount == 1);

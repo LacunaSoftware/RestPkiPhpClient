@@ -53,7 +53,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
      * @param SignatureStarter $signatureStarter
      * @param SignatureFinisher $signatureFinisher
      * @param bool $simulateWebPki
-     * @return string
+     * @return SignatureResult
      */
     protected function performSignature($signatureStarter, $signatureFinisher, $simulateWebPki)
     {
