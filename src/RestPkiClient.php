@@ -60,8 +60,8 @@ class RestPkiClient
         if (!empty($this->accessToken)) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
         }
-        if (!empty($this->_cultureName)) {
-            $headers['Accept-Language'] = $this->_cultureName;
+        if (!empty($this->cultureName)) {
+            $headers['Accept-Language'] = $this->cultureName;
         }
 
         $verify = true;
