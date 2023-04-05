@@ -21,6 +21,7 @@ class RestPkiClient
     public $restPkiVersion;
     public $usePhpCAInfo;
     public $caInfoPath;
+    public $cultureName;
 
     /**
      * @internal
@@ -35,12 +36,14 @@ class RestPkiClient
     public function __construct(
         $endpointUrl,
         $accessToken,
+        $cultureName = null,
         $usePhpCAInfo = false,
         $caInfoPath = null
     ) {
         $this->endpointUrl = $endpointUrl;
         $this->accessToken = $accessToken;
         $this->usePhpCAInfo = $usePhpCAInfo;
+        $this->cultureName = $cultureName;
 
         if (!isset($caInfoPath)) {
             $caInfoPath = __DIR__ . '/../resources/ca-bundle.pem';
@@ -56,6 +59,9 @@ class RestPkiClient
         ];
         if (!empty($this->accessToken)) {
             $headers['Authorization'] = 'Bearer ' . $this->accessToken;
+        }
+        if (!empty($this->_cultureName)) {
+            $headers['Accept-Language'] = $this->_cultureName;
         }
 
         $verify = true;
